@@ -18,6 +18,13 @@ const routes: Routes = [
           import('./dashboard/dashboard.module').then((m) => m.DashboardModule)
       },
       {
+        path: 'users',
+        loadChildren: () =>
+          import('./user-module/user-module.module').then(
+            (m) => m.UserModuleModule
+          )
+      },
+      {
         path: 'extra-pages',
         loadChildren: () =>
           import('./extra-pages/extra-pages.module').then(

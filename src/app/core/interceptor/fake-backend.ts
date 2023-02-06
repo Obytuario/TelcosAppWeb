@@ -14,10 +14,10 @@ import { User } from '../models/user';
 const users: User[] = [
   {
     id: 1,
-    username: 'admin@telcos.com',
+    username: '1030525189',
     password: 'admin',
-    firstName: 'Sarah',
-    lastName: 'Smith',
+    firstName: 'Ariel',
+    lastName: 'Bejarano',
     token: 'admin-token'
   }
 ];

@@ -20,11 +20,11 @@
                       <div *ngIf="error" class="alert alert-danger mb-3 mt-0">{{error}}</div>
                       <div class="form-group auth-form-group mb-4">
                         <mat-icon matSuffix class="auth-page-icon">email</mat-icon>
-                        <input type="email" formControlName="email" class="form-control auth-control" id="email"
-                          placeholder="Email" [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
-                        <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
-                          <div *ngIf="f.email.errors.required">Email is required</div>
-                          <div *ngIf="f.email.errors.email">Email must be a valid email address</div>
+                        <input type="text" formControlName="user" class="form-control auth-control" id="user"
+                          placeholder="Usuario" [ngClass]="{ 'is-invalid': submitted && f.user.errors }">
+                        <div *ngIf="submitted && f.user.errors" class="invalid-feedback">
+                          <div *ngIf="f.user.errors.required">Email is required</div>
+                          <div *ngIf="f.user.errors.user">Email must be a valid email address</div>
                         </div>
                       </div>
 
@@ -34,7 +34,7 @@
                           id="password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }"
                           placeholder="Password" />
                         <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
-                          <div *ngIf="f.password.errors.required">Password is required</div>
+                          <div *ngIf="f.password.errors.required">Contraseña es requerida</div>
                         </div>
                       </div>
 

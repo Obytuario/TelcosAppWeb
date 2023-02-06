@@ -25,9 +25,9 @@ export class SigninComponent
   }
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
-      email: [
-        'admin@telcos.com',
-        [Validators.required, Validators.email, Validators.minLength(5)]
+      user: [
+        '1030525189',
+        [Validators.required, Validators.maxLength(11), Validators.minLength(10)]
       ],
       password: ['admin', Validators.required]
     });
@@ -39,11 +39,11 @@ export class SigninComponent
     this.submitted = true;
     this.error = '';
     if (this.loginForm.invalid) {
-      this.error = 'Username and Password not valid !';
+      this.error = 'usuario y Contraseña no validos!';
       return;
     } else {
       this.subs.sink = this.authService
-        .login(this.f.email.value, this.f.password.value)
+        .login(this.f.user.value, this.f.password.value)
         .subscribe(
           (res) => {
             if (res) {
@@ -52,7 +52,7 @@ export class SigninComponent
                 this.router.navigate(['/dashboard/main']);
               }
             } else {
-              this.error = 'Invalid Login';
+              this.error = 'Credenciales Invalidas';
             }
           },
           (error) => {
