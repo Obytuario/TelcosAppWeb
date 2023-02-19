@@ -25,6 +25,27 @@ const routes: Routes = [
           )
       },
       {
+        path: 'tracking',
+        loadChildren: () =>
+          import('./order-tracking/order-tracking.module').then(
+            (m) => m.OrderTrackingModule
+          )
+      },
+      {
+        path: 'location',
+        loadChildren: () =>
+          import('./location/location.module').then(
+            (m) => m.LocationModule
+          )
+      },
+      {
+        path: 'billing',
+        loadChildren: () =>
+          import('./billing-module/billing-module.module').then(
+            (m) => m.BillingModuleModule
+          )
+      },
+      {
         path: 'extra-pages',
         loadChildren: () =>
           import('./extra-pages/extra-pages.module').then(

@@ -1,15 +1,19 @@
 import { formatDate } from '@angular/common';
+import { RouteInfo } from '../layout/sidebar/sidebar.metadata';
 export class AdvanceTable {
   id: number;
   img: string;
+  numberDocument: string;
   fName: string;
   lName: string;
   email: string;
-  gender: string;
+  active: string;
   bDate: string;
   mobile: string;
   address: string;
-  country: string;
+  operationCenter: string;
+  charge:string;
+  rol:string
   constructor(advanceTable) {
     {
       this.id = advanceTable.id || this.getRandomID();
@@ -17,11 +21,13 @@ export class AdvanceTable {
       this.fName = advanceTable.fName || '';
       this.lName = advanceTable.lName || '';
       this.email = advanceTable.email || '';
-      this.gender = advanceTable.gender || 'male';
+      this.active = advanceTable.active || 'no';
       this.bDate = formatDate(new Date(), 'yyyy-MM-dd', 'en') || '';
       this.mobile = advanceTable.mobile || '';
       this.address = advanceTable.address || '';
-      this.country = advanceTable.country || '';
+      this.operationCenter = advanceTable.operationCenter || '';
+      this.rol = advanceTable.rol || '';
+      this.charge = advanceTable.charge || '';
     }
   }
   public getRandomID(): string {

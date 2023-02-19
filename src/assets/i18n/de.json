@@ -25,8 +25,8 @@
     "TABLES": {
       "TEXT": "Supplies follow-up",
       "LIST": {
-        "BASIC": "Materials",
-        "MATERIAL": "Equipment"      
+        "MATERIAL": "Materials",
+        "EQUIPO": "Equipment"      
       }
     }, 
     "LOCATION-TABLE": {

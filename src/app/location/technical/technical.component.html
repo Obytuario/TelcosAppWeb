@@ -1,0 +1,26 @@
+<section class="content">
+    <div class="container-fluid">
+      <div class="block-header" *ngFor="let breadscrum of breadscrums">
+        <!-- breadcrumb -->
+        <app-breadcrumb [title]="breadscrum.title" [items]="breadscrum.items" [active_item]="breadscrum.active">
+        </app-breadcrumb>
+      </div>     
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="card">
+            <div class="header">
+              <h4>Tecnicos</h4>
+            </div>
+            <div class="card-body">
+              <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="18" style="height: 600px">
+                <agm-marker *ngFor="let marker of markers" [label]="marker.labelOptions" [iconUrl]="iconMap.iconUrl" [iconAnchorX]="5" [iconAnchorY]="5" [iconHeight]="5" [iconWidth]="5" [latitude]="marker.latitude" [longitude]="marker.longitude">
+                  
+                </agm-marker>
+              </agm-map>
+            </div>
+          </div>
+        </div>
+      </div> 
+    </div>
+  </section>
+  

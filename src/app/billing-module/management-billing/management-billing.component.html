@@ -1,0 +1,321 @@
+<section class="content">
+    <div class="container-fluid">
+      <div class="block-header" *ngFor="let breadscrum of breadscrums">
+        <!-- breadcrumb -->
+        <app-breadcrumb [title]="breadscrum.title" [items]="breadscrum.items" [active_item]="breadscrum.active">
+        </app-breadcrumb>
+      </div>    
+      <div class="row clearfix">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+          <div class="card">
+            <div class="body">
+              <div class="row">
+                <div class="col-sm-12">              
+                  <div class="ngxTableHeader">                  
+                    <ul class="header-buttons-left ms-0 mb-0">
+                      <li class="dropdown">
+                        <h2>
+                          <strong>Facturacion</strong></h2>
+                      </li>
+                      <li class="dropdown m-l-20">
+                        <label for="search-input"><i class="material-icons search-icon">search</i></label>
+                        <input placeholder="Buscar" type="text" class="browser-default search-field"
+                          (keyup)='filterDatatable($event)' aria-label="Search box">
+                      </li>
+                      <li class="dropdown m-l-20">
+                        <label for="search-input"><i class="material-icons search-icon">search</i></label>
+                        <input placeholder="Fecha Desde" type="text" class="browser-default search-field"
+                          (keyup)='filterDatatable($event)' aria-label="Search box">
+                      </li>
+                      <li class="dropdown m-l-20">
+                        <label for="search-input"><i class="material-icons search-icon">search</i></label>
+                        <input placeholder="Fecha Hasta" type="text" class="browser-default search-field"
+                          (keyup)='filterDatatable($event)' aria-label="Search box">
+                      </li>
+                    </ul>                
+                    
+                      <ul class="header-buttons">
+                        <li>
+                          <div class="export-button m-l-10" matTooltip="XLSX">
+                            <img src="assets/images/icons/xlsx.png" alt="" />
+                          </div>
+                        </li>                       
+                      </ul>
+                    
+                  </div>
+                  <ngx-datatable #table class="material" [rows]="data" [columns]="columns" [sortType]="'multi'"
+                    [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50" [rowHeight]="'60'" [limit]="10"
+                    (sort)="onSort($event)">                   
+                    <ngx-datatable-column name="First Name" [width]="130">
+                      <ng-template ngx-datatable-header-template>
+                        <span>OT</span>
+                      </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Cuenta" [width]="130">
+                      <ng-template ngx-datatable-header-template>
+                        <span>Cuenta</span>
+                      </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Last Name" [width]="120">
+                      <ng-template ngx-datatable-header-template>
+                        <span>Técnico</span>
+                      </ng-template>
+                    </ngx-datatable-column>                  
+                    <ngx-datatable-column name="Gender" [width]="120">
+                      <ng-template ngx-datatable-header-template>
+                        <span>Documento</span>
+                      </ng-template>
+                    </ngx-datatable-column> 
+                    <ngx-datatable-column name="Auxiliar" [width]="120">
+                      <ng-template ngx-datatable-header-template>
+                        <span>Auxiliar</span>
+                      </ng-template>
+                    </ngx-datatable-column>                 
+                    <ngx-datatable-column name="Phone" [width]="100">
+                      <ng-template ngx-datatable-header-template>
+                        <span>Fecha</span>
+                      </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="address" [width]="100">
+                      <ng-template ngx-datatable-header-template>
+                        <span>Centro Operaciones</span>
+                      </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="CodigoActividad" [width]="100">
+                      <ng-template ngx-datatable-header-template>
+                        <span>Codigo Actividad</span>
+                      </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="age" [width]="100">
+                      <ng-template ngx-datatable-header-template>
+                        <span>Puntaje</span>
+                      </ng-template>
+                    </ngx-datatable-column>                 
+                    <!-- action buttons -->
+                    <!-- <ngx-datatable-column name="Actions" sortable="false" [width]="120">
+                      <ng-template ngx-datatable-header-template>
+                        <span>Detalle</span>
+                      </ng-template>
+                      <ng-template let-value="value" let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+                        <span>
+                          <button class="btn tblActnBtn h-auto" (click)='editRow(row, rowIndex, editRecord)'>
+                            <i class="material-icons">mode_edit</i>
+                          </button>                       
+                        </span>
+                      </ng-template>
+                    </ngx-datatable-column> -->
+                  </ngx-datatable>
+                  <!-- Add Record Modal Window -->
+                  <ng-template #addRecord let-modal>
+                    <div class="modal-header editRowModal">
+                      <h4 class="modal-title" id="modal-basic-title">
+                        <div class="modal-header ">
+                          <img [src]='newUserImg' alt="avatar">
+                          <div class="modal-about">
+                            <div class="font-weight-bold p-t-10 font-17">
+                              New User</div>
+                          </div>
+                        </div>
+                      </h4>
+                      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+                        <span aria-hidden="true"><i class="material-icons">close</i></span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <form class="register-form" [formGroup]="register" (ngSubmit)="onAddRowSave(register)">
+                        <div class="input-field col s12 d-none">
+                          <input formControlName="id" class="form-control" type="hidden">
+                        </div>
+                        <div class="input-field col s12 d-none">
+                          <input formControlName="img" class="form-control" type="hidden">
+                        </div>
+                        <div class="row">
+                          <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                            <mat-form-field class="example-full-width" appearance="outline">
+                              <mat-label>First name</mat-label>
+                              <input matInput formControlName="firstName" required>
+                              <mat-icon matSuffix>face</mat-icon>
+                              <mat-error *ngIf="register.get('firstName').hasError('required')">
+                                First name is required
+                              </mat-error>
+                            </mat-form-field>
+                          </div>
+                          <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                            <mat-form-field class="example-full-width" appearance="outline">
+                              <mat-label>Last name</mat-label>
+                              <input matInput formControlName="lastName">
+                              <mat-icon matSuffix>face</mat-icon>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                            <mat-form-field class="example-full-width" appearance="outline">
+                              <mat-label>Phone</mat-label>
+                              <input matInput formControlName="phone" required>
+                              <mat-icon matSuffix>phone</mat-icon>
+                              <mat-error *ngIf="register.get('phone').hasError('required')">
+                                Phone name is required
+                              </mat-error>
+                            </mat-form-field>
+                          </div>
+                          <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                            <mat-form-field class="example-full-width" appearance="outline">
+                              <mat-label>Gender</mat-label>
+                              <mat-select formControlName="gender" required>
+                                <mat-option *ngFor="let gender of genders" [value]="gender.value">
+                                  {{gender.value}}
+                                </mat-option>
+                              </mat-select>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+                            <mat-form-field class="example-full-width" appearance="outline">
+                              <mat-label>Email</mat-label>
+                              <input matInput formControlName="email" required>
+                              <mat-icon matSuffix>email</mat-icon>
+                              <mat-error
+                                *ngIf="register.get('email').hasError('required') || register.get('email').touched">
+                                Please enter a valid email address
+                              </mat-error>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+                            <mat-form-field class="example-full-width" appearance="outline">
+                              <mat-label>Address</mat-label>
+                              <textarea matInput formControlName="address"></textarea>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+                            <button class="btn-space" [disabled]="!register.valid" mat-raised-button
+                              color="primary">Submit</button>
+                            <button type="button" mat-button data-dismiss="modal">Cancel</button>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </ng-template>
+                  <!-- Edit Record Modal Window -->
+                  <ng-template #editRecord let-modal>
+                    <div class="modal-header editRowModal">
+                      <h4 class="modal-title" id="modal-basic-title">
+                        <div class="modal-header ">
+                          <img [src]='selectedRowData?.img' alt="avatar">
+                          <div class="modal-about">
+                            <div class="font-weight-bold p-t-10 font-17">
+                              {{selectedRowData?.firstName}}
+                              {{selectedRowData?.lastName}}</div>
+                          </div>
+                        </div>
+                      </h4>
+                      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                        <span aria-hidden="true"><i class="material-icons">close</i></span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <form [formGroup]="editForm" (ngSubmit)="onEditSave(editForm)">
+                        <div class="input-field col s12 d-none">
+                          <input formControlName="id" class="form-control" type="hidden">
+                        </div>
+                        <div class="row">
+                          <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                            <mat-form-field class="example-full-width" appearance="outline">
+                              <mat-label>OT</mat-label>
+                              <input matInput formControlName="firstName" required>
+                              <mat-icon matSuffix>face</mat-icon>
+                              <mat-error *ngIf="editForm.get('firstName').hasError('required')">
+                                First name is required
+                              </mat-error>
+                            </mat-form-field>
+                          </div>
+                          <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                            <mat-form-field class="example-full-width" appearance="outline">
+                              <mat-label>Tecnico</mat-label>
+                              <input matInput formControlName="lastName">
+                              <mat-icon matSuffix>face</mat-icon>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+                            <mat-form-field class="example-full-width" appearance="outline">
+                              <mat-label>Fecha</mat-label>
+                              <input matInput formControlName="phone" required>
+                              <mat-icon matSuffix>phone</mat-icon>
+                              <mat-error *ngIf="register.get('phone').hasError('required')">
+                                Phone name is required
+                              </mat-error>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+                            <!-- <mat-form-field class="example-full-width" appearance="outline">
+                              <mat-label>Address</mat-label>
+                              <textarea matInput formControlName="address"></textarea>
+                            </mat-form-field> -->                          
+                            <div class="tableBody">
+                              <div class="table-responsive">
+                                <table class="table table-hover dashboard-task-infos">
+                                  <thead>
+                                    <tr>
+                                      <th>#</th>
+                                      <th>Equipo</th> 
+                                      <th>Serial</th>  
+                                      <th>Movimiento</th>                       
+                                      <th></th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr>
+                                      <td>1019110</td>
+                                      <td>CONECTOR I-STOP-42 REVERSE TEST TRTC</td>
+                                      <td>12789999994</td> 
+                                      <td>Instalado</td>                            
+                                      <td>                              
+                                        <button mat-icon-button class="tbl-action-btn">
+                                          <app-feather-icons [icon]="'trash'" [class]="'tbl-fav-edit'"></app-feather-icons>
+                                        </button>                            
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <td>1020395</td>
+                                      <td>CORREA PARA AJUSTAR CABLE COAXIAL BLANCA</td>
+                                      <td>12466645555</td> 
+                                      <td>Retirado</td>                            
+                                      <td>                              
+                                        <button mat-icon-button class="tbl-action-btn">
+                                          <app-feather-icons [icon]="'trash'" [class]="'tbl-fav-edit'"></app-feather-icons>
+                                        </button>                            
+                                      </td>
+                                    </tr>                          
+                                  </tbody>
+                                </table>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="modal-footer">
+                          <div class="button-demo">
+                            <!-- <button mat-raised-button type="submit" color="primary">Save</button> -->
+                            <button mat-button type="button" (click)="modal.close()">Volver</button>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </ng-template>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>     
+    </div>
+  </section>
+  

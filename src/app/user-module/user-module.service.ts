@@ -16,6 +16,7 @@ export class UserModuleService extends UnsubscribeOnDestroyAdapter{
   >([]);
   // Temporarily stores data from dialogs
   dialogData: any;
+  dialogUserHierarchyData:any;
   constructor(private httpClient: HttpClient) {
     super();
   }

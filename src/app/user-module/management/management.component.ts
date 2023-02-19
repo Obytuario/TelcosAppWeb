@@ -9,13 +9,14 @@ import { DataSource } from '@angular/cdk/collections';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { BehaviorSubject, fromEvent, merge, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-//import { FormDialogComponent } from './../dialogs/form-dialog/form-dialog.component';
+import { AddEditComponent } from './../dialogs/add-edit/add-edit.component';
 //import { FormDialog2Component } from './../dialogs/form-dialog2/form-dialog2.component';
 //import { DeleteDialogComponent } from './../dialogs/delete/delete.component';
 import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatMenu, MatMenuTrigger } from '@angular/material/menu';
 import { SelectionModel } from '@angular/cdk/collections';
 import { UnsubscribeOnDestroyAdapter } from '../../shared/UnsubscribeOnDestroyAdapter';
+import { AssignmentComponent } from '../dialogs/assignment/assignment.component';
 
 @Component({
   selector: 'app-management',
@@ -29,15 +30,16 @@ implements OnInit
 displayedColumns = [
   //'select',
   //'img',
-  'id',
+  //'id',
+  'numberDocument',
   'fName',
   'lName',
-  'email',    
-  //'bDate',
+  'email',
   'mobile',
-  'address',
-  'country',
-  'gender',
+  'rol',
+  'operationCenter',
+  'charge',
+  'active',
   'actions'
 ];
 exampleDatabase: UserModuleService | null;
@@ -81,31 +83,32 @@ addNew() {
   } else {
     tempDirection = 'ltr';
   }
-  // const dialogRef = this.dialog.open(FormDialogComponent, {
-  //   data: {
-  //     advanceTable: this.advanceTable,
-  //     action: 'add'
-  //   },
-  //   direction: tempDirection
-  // });
-  // this.subs.sink = dialogRef.afterClosed().subscribe((result) => {
-  //   if (result === 1) {
-  //     // After dialog is closed we're doing frontend updates
-  //     // For add we're just pushing a new row inside DataService
-  //     this.exampleDatabase.dataChange.value.unshift(
-  //       this.userModuleService.getDialogData()
-  //     );
-  //     this.refreshTable();
-  //     this.showNotification(
-  //       'snackbar-success',
-  //       'Add Record Successfully...!!!',
-  //       'bottom',
-  //       'center'
-  //     );
-  //   }
-  // });
+  const dialogRef = this.dialog.open(AddEditComponent, {
+    data: {
+      advanceTable: this.advanceTable,
+      action: 'add'
+    },
+    direction: tempDirection
+  });
+  this.subs.sink = dialogRef.afterClosed().subscribe((result) => {
+    if (result === 1) {
+      // After dialog is closed we're doing frontend updates
+      // For add we're just pushing a new row inside DataService
+      this.exampleDatabase.dataChange.value.unshift(
+        this.userModuleService.getDialogData()
+      );
+      this.refreshTable();
+      this.showNotification(
+        'snackbar-success',
+        'Add Record Successfully...!!!',
+        'bottom',
+        'center'
+      );
+    }
+  });
 }
 editCall(row) {
+  console.log(row);
   this.id = row.id;
   let tempDirection;
   if (localStorage.getItem('isRtl') === 'true') {
@@ -113,32 +116,32 @@ editCall(row) {
   } else {
     tempDirection = 'ltr';
   }
-  // const dialogRef = this.dialog.open(FormDialogComponent, {
-  //   data: {
-  //     advanceTable: row,
-  //     action: 'edit'
-  //   },
-  //   direction: tempDirection
-  // });
-  // this.subs.sink = dialogRef.afterClosed().subscribe((result) => {
-  //   if (result === 1) {
-  //     // When using an edit things are little different, firstly we find record inside DataService by id
-  //     const foundIndex = this.exampleDatabase.dataChange.value.findIndex(
-  //       (x) => x.id === this.id
-  //     );
-  //     // Then you update that record using data from dialogData (values you enetered)
-  //     this.exampleDatabase.dataChange.value[foundIndex] =
-  //       this.userModuleService.getDialogData();
-  //     // And lastly refresh table
-  //     this.refreshTable();
-  //     this.showNotification(
-  //       'black',
-  //       'Edit Record Successfully...!!!',
-  //       'bottom',
-  //       'center'
-  //     );
-  //   }
-  // });
+  const dialogRef = this.dialog.open(AddEditComponent, {
+    data: {
+      advanceTable: row,
+      action: 'edit'
+    },
+    direction: tempDirection
+  });
+  this.subs.sink = dialogRef.afterClosed().subscribe((result) => {
+    if (result === 1) {
+      // When using an edit things are little different, firstly we find record inside DataService by id
+      const foundIndex = this.exampleDatabase.dataChange.value.findIndex(
+        (x) => x.id === this.id
+      );
+      // Then you update that record using data from dialogData (values you enetered)
+      this.exampleDatabase.dataChange.value[foundIndex] =
+        this.userModuleService.getDialogData();
+      // And lastly refresh table
+      this.refreshTable();
+      this.showNotification(
+        'black',
+        'Usuario Modificado...!!!',
+        'bottom',
+        'center'
+      );
+    }
+  });
 }
 editJerarquia(row) {
   this.id = row.id;
@@ -148,32 +151,32 @@ editJerarquia(row) {
   } else {
     tempDirection = 'ltr';
   }
-  // const dialogRef = this.dialog.open(FormDialog2Component, {
-  //   data: {
-  //     advanceTable: row,
-  //     action: 'edit'
-  //   },
-  //   direction: tempDirection
-  // });
-  // this.subs.sink = dialogRef.afterClosed().subscribe((result) => {
-  //   if (result === 1) {
-  //     // When using an edit things are little different, firstly we find record inside DataService by id
-  //     const foundIndex = this.exampleDatabase.dataChange.value.findIndex(
-  //       (x) => x.id === this.id
-  //     );
-  //     // Then you update that record using data from dialogData (values you enetered)
-  //     this.exampleDatabase.dataChange.value[foundIndex] =
-  //       this.userModuleService.getDialogData();
-  //     // And lastly refresh table
-  //     this.refreshTable();
-  //     this.showNotification(
-  //       'black',
-  //       'Edit Record Successfully...!!!',
-  //       'bottom',
-  //       'center'
-  //     );
-  //   }
-  // });
+  const dialogRef = this.dialog.open(AssignmentComponent, {
+    data: {
+      advanceTable: row,
+      action: 'edit'
+    },
+    direction: tempDirection
+  });
+  this.subs.sink = dialogRef.afterClosed().subscribe((result) => {
+    if (result === 1) {
+      // When using an edit things are little different, firstly we find record inside DataService by id
+      const foundIndex = this.exampleDatabase.dataChange.value.findIndex(
+        (x) => x.id === this.id
+      );
+      // Then you update that record using data from dialogData (values you enetered)
+      this.exampleDatabase.dataChange.value[foundIndex] =
+        this.userModuleService.getDialogData();
+      // And lastly refresh table
+      this.refreshTable();
+      this.showNotification(
+        'black',
+        'Edit Record Successfully...!!!',
+        'bottom',
+        'center'
+      );
+    }
+  });
 }
 deleteItem(row) {
   this.id = row.id;
@@ -311,14 +314,17 @@ connect(): Observable<AdvanceTable[]> {
         .slice()
         .filter((advanceTable: AdvanceTable) => {
           const searchStr = (
-            advanceTable.fName +
+            advanceTable.numberDocument+
+            advanceTable.fName +            
             advanceTable.lName +
             advanceTable.email +
             advanceTable.mobile +
-            advanceTable.gender +
+            advanceTable.active +
             advanceTable.bDate +
-            advanceTable.address +
-            advanceTable.country
+            advanceTable.address +            
+            advanceTable.operationCenter+
+            advanceTable.rol+
+            advanceTable.charge
           ).toLowerCase();
           return searchStr.indexOf(this.filter.toLowerCase()) !== -1;
         });

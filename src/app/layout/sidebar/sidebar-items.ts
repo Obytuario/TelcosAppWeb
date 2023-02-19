@@ -115,15 +115,15 @@ export const ROUTES: RouteInfo[] = [
     groupTitle: false,
     submenu: [
       {
-        path: '/tables/basic-tables',
-        title: 'MENUITEMS.TABLES.LIST.BASIC',
+        path: '/tracking/management-equipment',
+        title: 'MENUITEMS.TABLES.LIST.EQUIPO',
         icon: '',
         class: 'ml-menu',
         groupTitle: false,
         submenu: []
       },
       {
-        path: '/tables/material-tables',
+        path: '/tracking/management-material',
         title: 'MENUITEMS.TABLES.LIST.MATERIAL',
         icon: '',
         class: 'ml-menu',
@@ -140,7 +140,7 @@ export const ROUTES: RouteInfo[] = [
     groupTitle: false,
     submenu: [
       {
-        path: '/maps/google',
+        path: '/location/work-orders',
         title: 'MENUITEMS.LOCATION-TABLE.LIST.WORKORDER',
         icon: '',
         class: 'ml-menu',
@@ -148,7 +148,7 @@ export const ROUTES: RouteInfo[] = [
         submenu: []
       },
       {
-        path: '/maps/google2',
+        path: '/location/technical',
         title: 'MENUITEMS.LOCATION-TABLE.LIST.TECHNICAL',
         icon: '',
         class: 'ml-menu',
@@ -158,7 +158,7 @@ export const ROUTES: RouteInfo[] = [
     ]
   },
   {
-    path: '/tables/facturacion',
+    path: '/billing/management-billing',
     title: 'MENUITEMS.FACT.TEXT',
     icon: 'grid',
     class: '',

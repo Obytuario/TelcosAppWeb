@@ -29,11 +29,15 @@ import { MatMenuModule } from '@angular/material/menu';
 import { UserModuleService } from './user-module.service';
 import { ComponentsModule } from '../shared/components/components.module';
 import { SharedModule } from '../shared/shared.module';
+import { AddEditComponent } from './dialogs/add-edit/add-edit.component';
+import { AssignmentComponent } from './dialogs/assignment/assignment.component';
 
 
 @NgModule({
   declarations: [
-    ManagementComponent
+    ManagementComponent,
+    AddEditComponent,
+    AssignmentComponent
   ],
   imports: [
     CommonModule,
