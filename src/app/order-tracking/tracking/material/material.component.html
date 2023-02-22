@@ -18,12 +18,13 @@
           <div class="card">
             <div class="body">
               <div class="row">
-                <div class="col-sm-12">              
-                  <div class="ngxTableHeader">                  
+                <div class="col-sm-12">
+                  <div class="ngxTableHeader">
                     <ul class="header-buttons-left ms-0 mb-0">
                       <li class="dropdown">
                         <h2>
-                          <strong>Material</strong></h2>
+                          <strong>Material</strong>
+                        </h2>
                       </li>
                       <li class="dropdown m-l-20">
                         <label for="search-input"><i class="material-icons search-icon">search</i></label>
@@ -42,48 +43,48 @@
                       </li>
                     </ul>
                     <!-- <ul class="header-buttons">
+                            <li>
+                              <button mat-mini-fab color="primary" (click)='addRow(addRecord)'>
+                                <mat-icon class="col-white">add</mat-icon>
+                              </button>
+                            </li>
+                          </ul> -->
+      
+                    <ul class="header-buttons">
                       <li>
-                        <button mat-mini-fab color="primary" (click)='addRow(addRecord)'>
-                          <mat-icon class="col-white">add</mat-icon>
-                        </button>
+                        <div class="export-button m-l-10" matTooltip="XLSX">
+                          <img src="assets/images/icons/xlsx.png" alt="" />
+                        </div>
                       </li>
-                    </ul> -->
-                    
-                      <ul class="header-buttons">
-                        <li>
-                          <div class="export-button m-l-10" matTooltip="XLSX">
-                            <img src="assets/images/icons/xlsx.png" alt="" />
-                          </div>
-                        </li>
-                        <!-- <li>
-                          <div class="export-button m-l-10" matTooltip="CSV">
-                            <img src="assets/images/icons/csv.png" alt="" (click)="exporter.exportTable('csv')" />                          
-                          </div>
-                        </li> -->
-                        <!-- <li>
-                          <div class="export-button m-l-10" matTooltip="JSON">
-                            <img src="assets/images/icons/json.png" alt="" (click)="exporter.exportTable('json')" />
-                          </div>
-                        </li>
-                        <li>
-                          <div class="export-button m-l-10" matTooltip="TXT">
-                            <img src="assets/images/icons/txt.png" alt="" (click)="exporter.exportTable('txt')" />
-                          </div>
-                        </li> -->
-                      </ul>
-                    
+                      <!-- <li>
+                                <div class="export-button m-l-10" matTooltip="CSV">
+                                  <img src="assets/images/icons/csv.png" alt="" (click)="exporter.exportTable('csv')" />                          
+                                </div>
+                              </li> -->
+                      <!-- <li>
+                                <div class="export-button m-l-10" matTooltip="JSON">
+                                  <img src="assets/images/icons/json.png" alt="" (click)="exporter.exportTable('json')" />
+                                </div>
+                              </li>
+                              <li>
+                                <div class="export-button m-l-10" matTooltip="TXT">
+                                  <img src="assets/images/icons/txt.png" alt="" (click)="exporter.exportTable('txt')" />
+                                </div>
+                              </li> -->
+                    </ul>
+      
                   </div>
                   <ngx-datatable #table class="material" [rows]="data" [columns]="columns" [sortType]="'multi'"
                     [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50" [rowHeight]="'60'" [limit]="10"
                     (sort)="onSort($event)">
                     <!-- user image -->
                     <!-- <ngx-datatable-column name="Image" sortable="false" prop="img" [width]="100">
-                      <ng-template let-row="data" let-value="value" let-i="index" ngx-datatable-cell-template>
-                        <td class="table-img padding-0">
-                          <img width="40" src="{{ value }}" />
-                        </td>
-                      </ng-template>
-                    </ngx-datatable-column> -->
+                            <ng-template let-row="data" let-value="value" let-i="index" ngx-datatable-cell-template>
+                              <td class="table-img padding-0">
+                                <img width="40" src="{{ value }}" />
+                              </td>
+                            </ng-template>
+                          </ngx-datatable-column> -->
                     <ngx-datatable-column name="First Name" [width]="130">
                       <ng-template ngx-datatable-header-template>
                         <span>OT</span>
@@ -109,7 +110,7 @@
                         <span>Carpeta</span>
                       </ng-template>
                     </ngx-datatable-column>
-                  
+      
                     <!-- action buttons -->
                     <ngx-datatable-column name="Actions" sortable="false" [width]="120">
                       <ng-template ngx-datatable-header-template>
@@ -121,8 +122,8 @@
                             <i class="material-icons">mode_edit</i>
                           </button>
                           <!-- <button class="btn tblActnBtn h-auto" (click)='deleteRow(row)'>
-                            <i class="material-icons">delete</i>
-                          </button> -->
+                                  <i class="material-icons">delete</i>
+                                </button> -->
                         </span>
                       </ng-template>
                     </ngx-datatable-column>
@@ -198,8 +199,7 @@
                               <mat-label>Email</mat-label>
                               <input matInput formControlName="email" required>
                               <mat-icon matSuffix>email</mat-icon>
-                              <mat-error
-                                *ngIf="register.get('email').hasError('required') || register.get('email').touched">
+                              <mat-error *ngIf="register.get('email').hasError('required') || register.get('email').touched">
                                 Please enter a valid email address
                               </mat-error>
                             </mat-form-field>
@@ -276,17 +276,17 @@
                             </mat-form-field>
                           </div>
                         </div>
-                        
+      
                         <div class="row">
-                          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">                         
+                          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
                             <div class="tableBody">
                               <div class="table-responsive">
                                 <table class="table table-hover dashboard-task-infos">
                                   <thead>
                                     <tr>
                                       <th>#</th>
-                                      <th>Material</th>   
-                                      <th>Cantidad</th>                       
+                                      <th>Material</th>
+                                      <th>Cantidad</th>
                                       <th></th>
                                     </tr>
                                   </thead>
@@ -294,39 +294,43 @@
                                     <tr>
                                       <td>1019110</td>
                                       <td>CONECTOR I-STOP-42 REVERSE TEST TRTC</td>
-                                      <td>4</td>                            
-                                      <td>                              
+                                      <td>4</td>
+                                      <td>
                                         <span>
-                                          <button class="btn tblActnBtn h-auto" (click)='editRow(row, rowIndex, editRecordMaterial)'>
+                                          <button class="btn tblActnBtn h-auto"
+                                            (click)='editRow(row, rowIndex, editRecordMaterial)'>
                                             <i class="material-icons">mode_edit</i>
                                           </button>
-                                          <button class="btn tblActnBtn h-auto" (click)='editRow(row, rowIndex, deleteRecordMaterial)' >
+                                          <button class="btn tblActnBtn h-auto"
+                                            (click)='editRow(row, rowIndex, deleteRecordMaterial)'>
                                             <i class="material-icons">delete</i>
                                           </button>
-                                        </span>                     
+                                        </span>
                                       </td>
                                     </tr>
                                     <tr>
                                       <td>1020395</td>
                                       <td>CORREA PARA AJUSTAR CABLE COAXIAL BLANCA</td>
-                                      <td>7</td>                            
+                                      <td>7</td>
                                       <td>
                                         <span>
-                                          <button class="btn tblActnBtn h-auto" (click)='editRow(row, rowIndex, editRecordMaterial)'>
+                                          <button class="btn tblActnBtn h-auto"
+                                            (click)='editRow(row, rowIndex, editRecordMaterial)'>
                                             <i class="material-icons">mode_edit</i>
                                           </button>
-                                          <button class="btn tblActnBtn h-auto" (click)='editRow(row, rowIndex, deleteRecordMaterial)'>
+                                          <button class="btn tblActnBtn h-auto"
+                                            (click)='editRow(row, rowIndex, deleteRecordMaterial)'>
                                             <i class="material-icons">delete</i>
                                           </button>
-                                        </span>                                     
+                                        </span>
                                       </td>
-                                    </tr>                          
+                                    </tr>
                                   </tbody>
                                 </table>
                               </div>
                             </div>
                           </div>
-                        </div> 
+                        </div>
                         <div class="modal-footer">
                           <div class="button-demo">
                             <!-- <button mat-raised-button type="submit" color="primary">Save</button> -->
@@ -334,7 +338,7 @@
                           </div>
                         </div>
                       </form>
-                      
+      
                     </div>
                   </ng-template>
                   <!-- Edit Record Material Modal Window -->
@@ -357,7 +361,7 @@
                       <form class="register-form m-4" [formGroup]="editFormMat" (ngSubmit)="onEditSave(editForm)">
                         <div class="input-field col s12 d-none">
                           <input formControlName="id" class="form-control" type="hidden">
-                        </div>                      
+                        </div>
                         <div class="row">
                           <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
                             <mat-form-field class="example-full-width" appearance="outline">
@@ -392,9 +396,9 @@
                                 Observacion es requerido.
                               </mat-error>
                             </mat-form-field>
-                          </div>                        
-                        </div>                     
-                        
+                          </div>
+                        </div>
+      
                         <div class="modal-footer">
                           <div class="button-demo">
                             <!-- <button mat-raised-button type="submit" color="primary">Save</button> -->
@@ -402,7 +406,7 @@
                           </div>
                         </div>
                       </form>
-                      
+      
                     </div>
                   </ng-template>
                   <!-- Delete Record material Modal Window -->
@@ -425,8 +429,8 @@
                       <form class="register-form m-4" [formGroup]="editFormEquipo" (ngSubmit)="onEditSave(editForm)">
                         <div class="input-field col s12 d-none">
                           <input formControlName="id" class="form-control" type="hidden">
-                        </div>                      
-                        
+                        </div>
+      
                         <div class="row">
                           <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
                             <mat-form-field class="example-full-width" appearance="outline">
@@ -437,9 +441,9 @@
                                 Observacion es requerido.
                               </mat-error>
                             </mat-form-field>
-                          </div>                        
-                        </div>                     
-                        
+                          </div>
+                        </div>
+      
                         <div class="modal-footer">
                           <div class="button-demo">
                             <!-- <button mat-raised-button type="submit" color="primary">Save</button> -->
@@ -447,7 +451,7 @@
                           </div>
                         </div>
                       </form>
-                      
+      
                     </div>
                   </ng-template>
                 </div>
@@ -455,7 +459,7 @@
             </div>
           </div>
         </div>
-      </div>   
+      </div>
     </div>
   </section>
   

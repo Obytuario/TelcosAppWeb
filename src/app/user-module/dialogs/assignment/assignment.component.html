@@ -1,113 +1,100 @@
-<div class="addContainer">
-    <div class="modalHeader">
-      <div class="editRowModal">
-        <div class="modalHeader clearfix">
-          <img [src]='advanceTable.img' alt="avatar">
-          <div class="modal-about">
-            <div class="font-weight-bold p-t-5 font-17">
-              {{dialogTitle}}</div>
+<div class="addContainer" style="width: 42vw;position: static;">
+  <div class="modalHeader">
+    <div class="editRowModal">
+      <div class="modalHeader clearfix">
+        <img [src]='advanceTable.img' alt="avatar">
+        <div class="modal-about">
+          <div class="font-weight-bold p-t-5 font-17">
+            {{dialogTitle}}</div>
+        </div>
+      </div>
+    </div>
+    <button mat-icon-button (click)="dialogRef.close()" aria-label="Close dialog">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <div mat-dialog-content>
+    <form class="register-form m-4" [formGroup]="assignmentForm" (ngSubmit)="submit">
+      
+      <!-- <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+          <div class="header">
+            <h6>Lider Superior: {{liderSuperior}}</h6> 
+          </div>             
+        </div>       
+      </div> -->
+      <div class="row">          
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">            
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Usuario Asignar</mat-label>
+            <input type="text" matInput [formControl]="userAssignment" [matAutocomplete]="auto">
+            <input matInput  required>
+            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+              <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                {{option.name}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </div>          
+      </div>      
+      <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+          <div class="example-button-row">
+            <button mat-raised-button color="primary" [type]="submit" [disabled]="!assignmentForm.valid"
+              [mat-dialog-close]="1" (click)="confirmAdd()">Adicionar</button>              
           </div>
         </div>
       </div>
-      <button mat-icon-button (click)="dialogRef.close()" aria-label="Close dialog">
-        <mat-icon>close</mat-icon>
-      </button>
-    </div>
-    <div mat-dialog-content>
-      <form class="register-form m-4" [formGroup]="advanceTableForm" (ngSubmit)="submit">
-        
-        <div class="row">
-          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
-            <div class="header">
-              <h6>Lider Superior: {{liderSuperior}}</h6> 
-            </div> 
-            <!-- <div class="modal-about">
-              <div class="header">
-                 {{liderSuperior}}</div>
-            </div> -->
-          </div>       
-        </div>
-        <div class="row">
+      <br> 
+      <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+          <div class="font-weight-bold font-17">
+            <h6>Usuarios Asignados</h6>
+          </div>          
+            <mat-table #table matTableExporter [dataSource]="dataUserAssignment" matSort class="example-full-width"
+              #exporter="matTableExporter">              
+              <ng-container matColumnDef="numberDocument">
+                <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'tbl-col-width-per-25'">Documento</mat-header-cell>
+                <mat-cell *matCellDef="let row" [ngClass]="'tbl-col-width-per-25'">{{row.numberDocument}}</mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="fName">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Nombre
+                </mat-header-cell>
+                <mat-cell *matCellDef="let row">
+                  {{row.fName}} {{row.lName}}</mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="rol">
+                <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'tbl-col-width-per-25'">Rol
+                </mat-header-cell>
+                <mat-cell *matCellDef="let row" [ngClass]="'tbl-col-width-per-25'">
+                  {{row.rol}}</mat-cell>
+              </ng-container>           
+              <ng-container matColumnDef="actions">
+                <mat-header-cell *matHeaderCellDef [ngClass]="'tbl-col-width-per-15'">Acciones</mat-header-cell>
+                <mat-cell *matCellDef="let row; let i=index;" [ngClass]="'tbl-col-width-per-15'">          
+                  <button mat-icon-button (click)="$event.stopPropagation()" (click)="deleteItem(row)" class="tbl-action-btn">
+                    <app-feather-icons [icon]="'trash'" [class]="'tbl-fav-delete'"></app-feather-icons>
+                  </button>                  
+                </mat-cell>
+              </ng-container>
           
-          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
-            
-            <mat-form-field class="example-full-width" appearance="outline">
-              <mat-label>usuario Asignar</mat-label>
-              <input type="text" matInput [formControl]="myControl" [matAutocomplete]="auto">
-              <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-                <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-                  {{option.name}}
-                </mat-option>
-              </mat-autocomplete>
-            </mat-form-field>
+              <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="editCall(row)" [style.cursor]="'pointer'"
+                matRipple>
+              </mat-row>
+            </mat-table>             
+        </div>
+      </div>
+      <br> 
+      <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+          <div class="example-button-row">
+            <button mat-raised-button color="primary" [type]="submit" [disabled]="!assignmentForm.valid"
+              [mat-dialog-close]="1" (click)="confirmAdd()">Guardar</button>
+            <button mat-raised-button color="warn" (click)="onNoClick()" tabindex="-1">Volver</button>
           </div>
         </div>
-        
-        <div>
-          <button mat-raised-button matStepperNext color="primary"
-            >Adicionar</button>
-        </div>
-        <br> 
-        <div class="row">
-          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
-            <!-- <mat-form-field class="example-full-width" appearance="outline">
-              <mat-label>Address</mat-label>
-              <textarea matInput formControlName="address"></textarea>
-            </mat-form-field> -->     
-            <div class="header">
-              <h6>Usuarios Asignados</h6>
-            </div>                     
-            <div class="tableBody">
-              <div class="table-responsive">
-                <table class="table table-hover dashboard-task-infos">
-                  <thead>
-                    <tr>
-                      <th>Documento</th>
-                      <th>Nombre</th> 
-                      <th>Rol</th>  
-                      <!-- <th>Movimiento</th>                        -->
-                      <th></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>1030525189</td>
-                      <td>Ariel Bejarano</td>
-                      <td>Tecnico</td> 
-                      <!-- <td>Instalado</td>                             -->
-                      <td>                              
-                        <button mat-icon-button class="tbl-action-btn">
-                          <app-feather-icons [icon]="'trash'" [class]="'tbl-fav-edit'"></app-feather-icons>
-                        </button>                            
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>1030525188</td>
-                      <td>Roger Fonseca</td>
-                      <td>Tecnico</td> 
-                      <!-- <td>Retirado</td>                             -->
-                      <td>                              
-                        <button mat-icon-button class="tbl-action-btn">
-                          <app-feather-icons [icon]="'trash'" [class]="'tbl-fav-edit'"></app-feather-icons>
-                        </button>                            
-                      </td>
-                    </tr>                          
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
-            <div class="example-button-row">
-              <button mat-raised-button color="primary" [type]="submit" [disabled]="!advanceTableForm.valid"
-                [mat-dialog-close]="1" (click)="confirmAdd()">Guardar</button>
-              <button mat-raised-button color="warn" (click)="onNoClick()" tabindex="-1">Volver</button>
-            </div>
-          </div>
-        </div>
-      </form>
-    </div>
+      </div>
+    </form>    
   </div>
-  
+</div>

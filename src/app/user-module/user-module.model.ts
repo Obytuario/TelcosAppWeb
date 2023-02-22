@@ -1,6 +1,6 @@
 import { formatDate } from '@angular/common';
 import { RouteInfo } from '../layout/sidebar/sidebar.metadata';
-export class AdvanceTable {
+export class AdvanceUser {
   id: number;
   img: string;
   numberDocument: string;

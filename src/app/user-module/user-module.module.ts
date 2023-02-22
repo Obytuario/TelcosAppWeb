@@ -31,13 +31,16 @@ import { ComponentsModule } from '../shared/components/components.module';
 import { SharedModule } from '../shared/shared.module';
 import { AddEditComponent } from './dialogs/add-edit/add-edit.component';
 import { AssignmentComponent } from './dialogs/assignment/assignment.component';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { DeleteAssignmentComponent } from './dialogs/delete-assignment/delete-assignment.component';
 
 
 @NgModule({
   declarations: [
     ManagementComponent,
     AddEditComponent,
-    AssignmentComponent
+    AssignmentComponent,
+    DeleteAssignmentComponent
   ],
   imports: [
     CommonModule,
@@ -65,7 +68,8 @@ import { AssignmentComponent } from './dialogs/assignment/assignment.component';
     MatAutocompleteModule,
     MatProgressSpinnerModule,
     ComponentsModule,
-    SharedModule
+    SharedModule,
+    NgxDatatableModule
   ],
   providers: [UserModuleService]
 })

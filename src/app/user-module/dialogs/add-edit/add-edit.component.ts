@@ -7,7 +7,7 @@ import {
   UntypedFormGroup,
   UntypedFormBuilder
 } from '@angular/forms';
-import { AdvanceTable } from '../../user-module.model';
+import { AdvanceUser } from '../../user-module.model';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { formatDate } from '@angular/common';
 
@@ -21,7 +21,7 @@ export class AddEditComponent implements OnInit {
   action: string;
   dialogTitle: string;
   advanceTableForm: UntypedFormGroup;
-  advanceTable: AdvanceTable;
+  advanceTable: AdvanceUser;
   constructor(
     public dialogRef: MatDialogRef<AddEditComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -36,7 +36,7 @@ export class AddEditComponent implements OnInit {
       this.advanceTable = data.advanceTable;
     } else {
       this.dialogTitle = 'Nuevo Usuario';
-      this.advanceTable = new AdvanceTable({});
+      this.advanceTable = new AdvanceUser({});
     }
     this.advanceTableForm = this.createContactForm();
   }

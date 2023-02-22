@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { AdvanceTable } from './../user-module.model';
+import { AdvanceUser } from './../user-module.model';
 import { DataSource } from '@angular/cdk/collections';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { BehaviorSubject, fromEvent, merge, Observable } from 'rxjs';
@@ -44,9 +44,9 @@ displayedColumns = [
 ];
 exampleDatabase: UserModuleService | null;
 dataSource: ExampleDataSource | null;
-selection = new SelectionModel<AdvanceTable>(true, []);
+selection = new SelectionModel<AdvanceUser>(true, []);
 id: number;
-advanceTable: AdvanceTable | null;
+advanceTable: AdvanceUser | null;
 
 breadscrums = [
   {
@@ -234,7 +234,7 @@ removeSelectedRows() {
     // console.log(this.dataSource.renderedData.findIndex((d) => d === item));
     this.exampleDatabase.dataChange.value.splice(index, 1);
     this.refreshTable();
-    this.selection = new SelectionModel<AdvanceTable>(true, []);
+    this.selection = new SelectionModel<AdvanceUser>(true, []);
   });
   this.showNotification(
     'snackbar-danger',
@@ -269,7 +269,7 @@ showNotification(colorName, text, placementFrom, placementAlign) {
 }
 
 // context menu
-onContextMenu(event: MouseEvent, item: AdvanceTable) {
+onContextMenu(event: MouseEvent, item: AdvanceUser) {
   event.preventDefault();
   this.contextMenuPosition.x = event.clientX + 'px';
   this.contextMenuPosition.y = event.clientY + 'px';
@@ -278,7 +278,7 @@ onContextMenu(event: MouseEvent, item: AdvanceTable) {
   this.contextMenu.openMenu();
 }
 }
-export class ExampleDataSource extends DataSource<AdvanceTable> {
+export class ExampleDataSource extends DataSource<AdvanceUser> {
 filterChange = new BehaviorSubject('');
 get filter(): string {
   return this.filterChange.value;
@@ -286,8 +286,8 @@ get filter(): string {
 set filter(filter: string) {
   this.filterChange.next(filter);
 }
-filteredData: AdvanceTable[] = [];
-renderedData: AdvanceTable[] = [];
+filteredData: AdvanceUser[] = [];
+renderedData: AdvanceUser[] = [];
 constructor(
   public exampleDatabase: UserModuleService,
   public paginator: MatPaginator,
@@ -298,7 +298,7 @@ constructor(
   this.filterChange.subscribe(() => (this.paginator.pageIndex = 0));
 }
 /** Connect function called by the table to retrieve one stream containing the data to render. */
-connect(): Observable<AdvanceTable[]> {
+connect(): Observable<AdvanceUser[]> {
   // Listen for any changes in the base data, sorting, filtering, or pagination
   const displayDataChanges = [
     this.exampleDatabase.dataChange,
@@ -312,7 +312,7 @@ connect(): Observable<AdvanceTable[]> {
       // Filter data
       this.filteredData = this.exampleDatabase.data
         .slice()
-        .filter((advanceTable: AdvanceTable) => {
+        .filter((advanceTable: AdvanceUser) => {
           const searchStr = (
             advanceTable.numberDocument+
             advanceTable.fName +            
@@ -342,7 +342,7 @@ connect(): Observable<AdvanceTable[]> {
 }
 disconnect() {}
 /** Returns a sorted copy of the database data. */
-sortData(data: AdvanceTable[]): AdvanceTable[] {
+sortData(data: AdvanceUser[]): AdvanceUser[] {
   if (!this._sort.active || this._sort.direction === '') {
     return data;
   }

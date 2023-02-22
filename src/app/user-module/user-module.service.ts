@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { AdvanceTable } from './user-module.model';
+import { AdvanceUser } from './user-module.model';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { UnsubscribeOnDestroyAdapter } from '../shared/UnsubscribeOnDestroyAdapter';
 
@@ -11,8 +11,8 @@ export class UserModuleService extends UnsubscribeOnDestroyAdapter{
 
   private readonly API_URL = 'assets/data/advanceTable.json';
   isTblLoading = true;
-  dataChange: BehaviorSubject<AdvanceTable[]> = new BehaviorSubject<
-    AdvanceTable[]
+  dataChange: BehaviorSubject<AdvanceUser[]> = new BehaviorSubject<
+  AdvanceUser[]
   >([]);
   // Temporarily stores data from dialogs
   dialogData: any;
@@ -20,7 +20,7 @@ export class UserModuleService extends UnsubscribeOnDestroyAdapter{
   constructor(private httpClient: HttpClient) {
     super();
   }
-  get data(): AdvanceTable[] {
+  get data(): AdvanceUser[] {
     return this.dataChange.value;
   }
   getDialogData() {
@@ -29,7 +29,7 @@ export class UserModuleService extends UnsubscribeOnDestroyAdapter{
   /** CRUD METHODS */
   getAllAdvanceTables(): void {
     this.subs.sink = this.httpClient
-      .get<AdvanceTable[]>(this.API_URL)
+      .get<AdvanceUser[]>(this.API_URL)
       .subscribe(
         (data) => {
           this.isTblLoading = false;
@@ -41,7 +41,7 @@ export class UserModuleService extends UnsubscribeOnDestroyAdapter{
         }
       );
   }
-  addAdvanceTable(advanceTable: AdvanceTable): void {
+  addAdvanceTable(advanceTable: AdvanceUser): void {
     this.dialogData = advanceTable;
 
     /*  this.httpClient.post(this.API_URL, advanceTable).subscribe(data => {
@@ -51,7 +51,7 @@ export class UserModuleService extends UnsubscribeOnDestroyAdapter{
      // error code here
     });*/
   }
-  updateAdvanceTable(advanceTable: AdvanceTable): void {
+  updateAdvanceTable(advanceTable: AdvanceUser): void {
     this.dialogData = advanceTable;
 
     /* this.httpClient.put(this.API_URL + advanceTable.id, advanceTable).subscribe(data => {
