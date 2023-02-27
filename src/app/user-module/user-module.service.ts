@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, catchError, map, throwError } from 'rxjs';
 import { AdvanceUser } from './user-module.model';
+import { environment } from 'src/environments/environment';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { UnsubscribeOnDestroyAdapter } from '../shared/UnsubscribeOnDestroyAdapter';
+import { RequestResult } from '../core/models/Service/requestResult';
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +26,7 @@ export class UserModuleService extends UnsubscribeOnDestroyAdapter{
     return this.dataChange.value;
   }
   getDialogData() {
+    console.log("consumo"+this.dialogData);
     return this.dialogData;
   }
   /** CRUD METHODS */
@@ -41,16 +44,23 @@ export class UserModuleService extends UnsubscribeOnDestroyAdapter{
         }
       );
   }
-  addAdvanceTable(advanceTable: AdvanceUser): void {
-    this.dialogData = advanceTable;
-
-    /*  this.httpClient.post(this.API_URL, advanceTable).subscribe(data => {
-      this.dialogData = advanceTable;
-      },
-      (err: HttpErrorResponse) => {
-     // error code here
-    });*/
-  }
+  
+  addUserTable(addUser: AdvanceUser) {
+       
+    addUser.numberDocument = "1030525188";
+    addUser.idRol = "DB8EA50A-3199-44BF-A443-55D50FB05F89";
+    return this.httpClient
+    .post<RequestResult<AdvanceUser>>(`${environment.apiUrl}/Api/User/SaveUser`, addUser)
+    .pipe(
+      map((requestResult) => {        
+        this.isTblLoading = false;
+        this.dialogData = requestResult.result;
+        return requestResult;
+      }),
+      catchError(this.errorHandler)
+    );   
+}
+ 
   updateAdvanceTable(advanceTable: AdvanceUser): void {
     this.dialogData = advanceTable;
 
@@ -72,5 +82,17 @@ export class UserModuleService extends UnsubscribeOnDestroyAdapter{
          // error code here
       }
     );*/
+  }
+  errorHandler(error) {
+    let errorMessage = "";
+    if (error.error instanceof ErrorEvent) {
+      // Get client-side error
+      errorMessage = error.error.message;
+    } else {
+      // Get server-side error
+      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+    }
+    console.log(errorMessage);
+    return throwError(errorMessage);
   }
 }

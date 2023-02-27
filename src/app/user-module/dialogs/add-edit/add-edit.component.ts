@@ -1,5 +1,7 @@
 import { Component, OnInit,Inject } from '@angular/core';
+import { BehaviorSubject, fromEvent, merge, Observable } from 'rxjs';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserModuleService } from '../../user-module.service';
 import {
   UntypedFormControl,
@@ -10,6 +12,9 @@ import {
 import { AdvanceUser } from '../../user-module.model';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { formatDate } from '@angular/common';
+import { SubSink } from '../../../shared/sub-sink';
+import { SubscriptionLike } from 'rxjs';
+import { UnsubscribeOnDestroyAdapter } from 'src/app/shared/UnsubscribeOnDestroyAdapter';
 
 @Component({
   selector: 'app-add-edit',
@@ -17,17 +22,19 @@ import { formatDate } from '@angular/common';
   styleUrls: ['./add-edit.component.sass'],
   providers: [{ provide: MAT_DATE_LOCALE, useValue: 'en-GB' }]
 })
-export class AddEditComponent implements OnInit {
+export class AddEditComponent extends UnsubscribeOnDestroyAdapter implements OnInit {
   action: string;
   dialogTitle: string;
   advanceTableForm: UntypedFormGroup;
   advanceTable: AdvanceUser;
-  constructor(
+  constructor(    
     public dialogRef: MatDialogRef<AddEditComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     public userModuleService: UserModuleService,
-    private fb: UntypedFormBuilder
+    private fb: UntypedFormBuilder,
+    private snackBar: MatSnackBar
   ) { 
+    super();
     // Set the defaults
     this.action = data.action;
     if (this.action === 'edit') {
@@ -83,9 +90,47 @@ export class AddEditComponent implements OnInit {
     this.dialogRef.close();
   }
   public confirmAdd(): void {
-    this.userModuleService.addAdvanceTable(
-      this.advanceTableForm.getRawValue()
-    );
+    this.subs.sink = this.userModuleService
+        .addUserTable(this.advanceTableForm.getRawValue())
+        .subscribe(
+          (res) => {
+            
+            if (res.isSuccessful) {
+              // const token = this.authService.currentUserValue.token;
+              // if (token) {
+              //   this.router.navigate(['/dashboard/main']);
+              // }
+              this.dialogRef.close(1);
+            } else {
+              this.showNotification(
+                'snackbar-warning',
+                 res.messages,
+                'bottom',
+                'center'
+              );
+              this.dialogRef.close();
+              //this.error = 'Credenciales Invalidas';
+            }
+          },
+          (error) => {
+            this.dialogRef.close();  
+            this.showNotification(
+              'snackbar-danger',
+              'No se pudo crear el Usuario, Valide con el administrador...!!!',
+              'bottom',
+              'center'
+            );         
+          }
+        );    
+  }
+
+  showNotification(colorName, text, placementFrom, placementAlign) {
+    this.snackBar.open(text, '', {
+      duration: 2000,
+      verticalPosition: placementFrom,
+      horizontalPosition: placementAlign,
+      panelClass: colorName
+    });
   }
 
 }

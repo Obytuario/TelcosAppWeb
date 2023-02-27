@@ -1,55 +1,5 @@
 [
-  {
-    "id": "001",
-    "numberDocument": "1134522280",
-    "img": "assets/images/user/user1.jpg",
-    "fName": "Jenish",
-    "lName": "Shah",
-    "email": "test@email.com",
-    "active": "si",
-    "bDate": "1987-02-25T14:22:18Z",
-    "rol": "Tecnico",
-    "codeRol": "Tec",
-    "charge":"Tecnico intalaciones",
-    "mobile": "1234567890",
-    "operationCenter": "Usa",
-    "userAssignment":[
-      {
-        "id": "024",
-        "numberDocument": "1096783455",
-        "img": "assets/images/user/user1.jpg",
-        "fName": "Carlos",
-        "lName": "Amaya",
-        "email": "test@email.com",
-        "active": "si",
-        "bDate": "1987-02-25T14:22:18Z",
-        "rol": "Tecnico Axiliar",
-        "codeRol": "TecAux",
-        "charge":"Auxiliar",
-        "mobile": "3105359982",
-        "operationCenter": "Bogota"
-       
-      },
-      {
-        "id": "025",
-        "numberDocument": "1074653992",
-        "img": "assets/images/user/user2.jpg",
-        "fName": "Antonio",
-        "lName": "Lozano",
-        "email": "test@email.com",
-        "active": "no",
-        "bDate": "1987-02-17T14:22:18Z",
-        "rol": "Tecnico Auxiliar",
-        "codeRol": "TecAux",
-        "charge":"Auxiliar",
-        "mobile": "3502000658",
-        "operationCenter": "Bogota"
-        
-      } 
-      
-    ]
-   
-  },
+  
   {
     "id": "002",
     "numberDocument": "1030542638",

@@ -75,7 +75,7 @@ ngOnInit() {
 }
 refresh() {
   this.loadData();
-}
+} 
 addNew() {
   let tempDirection;
   if (localStorage.getItem('isRtl') === 'true') {
@@ -94,17 +94,28 @@ addNew() {
     if (result === 1) {
       // After dialog is closed we're doing frontend updates
       // For add we're just pushing a new row inside DataService
-      this.exampleDatabase.dataChange.value.unshift(
-        this.userModuleService.getDialogData()
+      const userAdicionado = this.userModuleService.getDialogData();
+      // si no lo encuentra lo adiciona     
+      const foundIndex = this.exampleDatabase.dataChange.value.findIndex(
+        (x) => x.id === userAdicionado?.id
       );
+      if(foundIndex === -1)
+      {
+        this.exampleDatabase.dataChange.value.unshift(
+          this.userModuleService.getDialogData()
+        );
+      }
+      
+      
       this.refreshTable();
       this.showNotification(
         'snackbar-success',
-        'Add Record Successfully...!!!',
+        'Usuario Creado...!!!',
         'bottom',
         'center'
       );
     }
+    
   });
 }
 editCall(row) {
@@ -130,8 +141,8 @@ editCall(row) {
         (x) => x.id === this.id
       );
       // Then you update that record using data from dialogData (values you enetered)
-      this.exampleDatabase.dataChange.value[foundIndex] =
-        this.userModuleService.getDialogData();
+      // this.exampleDatabase.dataChange.value[foundIndex] =
+      //   this.userModuleService.getDialogData();
       // And lastly refresh table
       this.refreshTable();
       this.showNotification(
@@ -165,8 +176,8 @@ editJerarquia(row) {
         (x) => x.id === this.id
       );
       // Then you update that record using data from dialogData (values you enetered)
-      this.exampleDatabase.dataChange.value[foundIndex] =
-        this.userModuleService.getDialogData();
+      // this.exampleDatabase.dataChange.value[foundIndex] =
+      //   this.userModuleService.getDialogData();
       // And lastly refresh table
       this.refreshTable();
       this.showNotification(
