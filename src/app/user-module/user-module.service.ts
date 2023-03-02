@@ -45,16 +45,16 @@ export class UserModuleService extends UnsubscribeOnDestroyAdapter{
       );
   }
   
-  addUserTable(addUser: AdvanceUser) {
-       
-    addUser.numberDocument = "1030525188";
+  addUserTable(addUser: AdvanceUser) {       
+    
     addUser.idRol = "DB8EA50A-3199-44BF-A443-55D50FB05F89";
     return this.httpClient
     .post<RequestResult<AdvanceUser>>(`${environment.apiUrl}/Api/User/SaveUser`, addUser)
     .pipe(
       map((requestResult) => {        
         this.isTblLoading = false;
-        this.dialogData = requestResult.result;
+        addUser.id = requestResult.result.id;
+        this.dialogData = addUser;
         return requestResult;
       }),
       catchError(this.errorHandler)

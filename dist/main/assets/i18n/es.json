@@ -1,0 +1,43 @@
+{
+  "HEADER":{
+    "SEARCH": {
+      "TEXT": "Buscar.."
+    }
+  },
+  "MENUITEMS": {
+    "USER":{
+      "POST": "Gerente"
+    },
+    "MAIN": {
+      "TEXT": "-- Principal"
+    },
+    "HOME": {
+      "TEXT": "Casa",
+      "LIST": {
+        "DASHBOARD1": "Tablero 1",
+        "DASHBOARD2": "Tablero 2",
+        "DASHBOARD3": "Tablero 3"
+      }
+    },
+    "USER-TABLE": {
+      "TEXT": "Users"
+    },   
+    "TABLES": {
+      "TEXT": "Seguimiento Insumos",
+      "LIST": {
+        "MATERIAL": "Materiales",
+        "EQUIPO": "Equipos"       
+      }
+    }, 
+    "LOCATION-TABLE": {
+      "TEXT": "Localizacion",
+      "LIST": {
+        "WORKORDER": "Ordenes Trabajo",
+        "TECHNICAL": "Tecnicos"      
+      }
+    }, 
+    "FACT": {
+      "TEXT": "Facturación"      
+    }  
+  }
+}

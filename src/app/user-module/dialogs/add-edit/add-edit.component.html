@@ -30,7 +30,7 @@
             <mat-form-field class="example-full-width" appearance="outline">
               <mat-label>apellido</mat-label>
               <input matInput formControlName="lName">
-              <mat-icon matSuffix>face</mat-icon>
+              <mat-icon matSuffix>fingerprint</mat-icon>
               <mat-error *ngIf="advanceTableForm.get('lName').hasError('required')">
                 Apellido es requerido
               </mat-error>
@@ -38,7 +38,17 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+          <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>Numero Documento</mat-label>
+              <input matInput formControlName="numberDocument">
+              <mat-icon matSuffix>keyboard</mat-icon>
+              <mat-error *ngIf="advanceTableForm.get('numberDocument').hasError('required')">
+                Numero Documento es requerido
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
             <div class="m-b-20">
               <mat-label class="msr-3">Activo:</mat-label>
               <mat-radio-group aria-label="Select active" formControlName="active" required>
@@ -49,7 +59,7 @@
                 </mat-error>
               </mat-radio-group>
             </div>
-          </div>
+          </div>          
         </div>
         <div class="row">
           <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">

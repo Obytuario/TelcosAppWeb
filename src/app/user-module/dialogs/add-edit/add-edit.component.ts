@@ -63,8 +63,7 @@ export class AddEditComponent extends UnsubscribeOnDestroyAdapter implements OnI
   }
   createContactForm(): UntypedFormGroup {
     return this.fb.group({
-      id: [this.advanceTable.id],
-      numberDocument: [this.advanceTable.numberDocument],
+      id: [this.advanceTable.id],      
       img: [this.advanceTable.img],
       fName: [this.advanceTable.fName, [Validators.required]],
       lName: [this.advanceTable.lName, [Validators.required]],
@@ -72,6 +71,7 @@ export class AddEditComponent extends UnsubscribeOnDestroyAdapter implements OnI
         this.advanceTable.email,
         [Validators.required, Validators.email, Validators.minLength(5)]
       ],
+      numberDocument: [this.advanceTable.numberDocument,[Validators.required]],
       active: [this.advanceTable.active],
       bDate: [
         formatDate(this.advanceTable.bDate, 'yyyy-MM-dd', 'en'),

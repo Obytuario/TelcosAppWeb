@@ -1,0 +1,43 @@
+{
+  "HEADER":{
+    "SEARCH": {
+      "TEXT": "Search.."
+    }
+  },
+  "MENUITEMS": {
+    "USER":{
+      "POST": "Manager"
+    },
+    "MAIN": {
+      "TEXT": "-- Main"
+    },
+    "HOME": {
+      "TEXT": "Home",
+      "LIST": {
+        "DASHBOARD1": "Dashboard 1",
+        "DASHBOARD2": "Dashboard 2",
+        "DASHBOARD3": "Dashboard 3"
+      }
+    },
+    "USER-TABLE": {
+      "TEXT": "Users"
+    },
+    "TABLES": {
+      "TEXT": "Supplies follow-up",
+      "LIST": {
+        "MATERIAL": "Materials",
+        "EQUIPO": "Equipment"      
+      }
+    }, 
+    "LOCATION-TABLE": {
+      "TEXT": "Location",
+      "LIST": {
+        "WORKORDER": "Work Order",
+        "TECHNICAL": "Technical"      
+      }
+    }, 
+    "FACT": {
+      "TEXT": "Billing"      
+    }       
+  }
+}
