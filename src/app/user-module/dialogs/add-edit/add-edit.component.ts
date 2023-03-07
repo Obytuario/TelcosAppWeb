@@ -15,6 +15,11 @@ import { formatDate } from '@angular/common';
 import { SubSink } from '../../../shared/sub-sink';
 import { SubscriptionLike } from 'rxjs';
 import { UnsubscribeOnDestroyAdapter } from 'src/app/shared/UnsubscribeOnDestroyAdapter';
+import { RolService } from '../../../core/service/rol.service';
+import { HttpClient } from '@angular/common/http';
+import { ResponseSelectDto } from '../../../core/models/Service/responseSelectDto';
+import { ChargeService } from '../../../core/service/charge.service';
+import { OperationCenterService } from '../../../core/service/operation-center.service';
 
 @Component({
   selector: 'app-add-edit',
@@ -27,12 +32,18 @@ export class AddEditComponent extends UnsubscribeOnDestroyAdapter implements OnI
   dialogTitle: string;
   advanceTableForm: UntypedFormGroup;
   advanceTable: AdvanceUser;
+  rolDatabase: RolService | null;
+  cargoDatabase: ChargeService | null;
+  centroOperacionDatabase: OperationCenterService | null;
+  selectDataRol;selectDataCargo;selectDataCentroOperaciones : ResponseSelectDto[]=[]; 
+  
   constructor(    
     public dialogRef: MatDialogRef<AddEditComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     public userModuleService: UserModuleService,
     private fb: UntypedFormBuilder,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    public httpClient: HttpClient
   ) { 
     super();
     // Set the defaults
@@ -49,6 +60,7 @@ export class AddEditComponent extends UnsubscribeOnDestroyAdapter implements OnI
   }
 
   ngOnInit(): void {
+    this.loadData();
   }
   formControl = new UntypedFormControl('', [
     Validators.required
@@ -73,10 +85,10 @@ export class AddEditComponent extends UnsubscribeOnDestroyAdapter implements OnI
       ],
       numberDocument: [this.advanceTable.numberDocument,[Validators.required]],
       active: [this.advanceTable.active],
-      bDate: [
-        formatDate(this.advanceTable.bDate, 'yyyy-MM-dd', 'en'),
-        [Validators.required]
-      ],
+      // bDate: [
+      //   formatDate(this.advanceTable.bDate, 'yyyy-MM-dd', 'en'),
+      //   [Validators.required]
+      // ],
       rol: [this.advanceTable.rol],
       mobile: [this.advanceTable.mobile, [Validators.required]],
       operationCenter: [this.advanceTable.operationCenter],
@@ -131,6 +143,30 @@ export class AddEditComponent extends UnsubscribeOnDestroyAdapter implements OnI
       horizontalPosition: placementAlign,
       panelClass: colorName
     });
+  }
+
+  public loadData() {
+    this.rolDatabase = new RolService(this.httpClient);
+    this.rolDatabase.getAllRol();
+    this.rolDatabase.dataChange.subscribe( s => {
+      this.selectDataRol = s;
+      console.log(this.selectDataRol);
+    }); 
+    
+    this.cargoDatabase = new ChargeService(this.httpClient);
+    this.cargoDatabase.getAllCharge();
+    this.cargoDatabase.dataChange.subscribe( s => {
+      this.selectDataCargo = s;
+      console.log(this.selectDataCargo);
+    }); 
+
+    this.centroOperacionDatabase = new OperationCenterService(this.httpClient);
+    this.centroOperacionDatabase.getAllOperationCenter();
+    this.centroOperacionDatabase.dataChange.subscribe( s => {
+      this.selectDataCentroOperaciones = s;
+      console.log(this.selectDataCentroOperaciones);
+    }); 
+    
   }
 
 }

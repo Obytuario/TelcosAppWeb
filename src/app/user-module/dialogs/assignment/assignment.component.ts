@@ -268,7 +268,7 @@ export class ExampleDataSource extends DataSource<AdvanceUser> {
               advanceTable.lName +
               advanceTable.email +
               advanceTable.mobile +           
-              advanceTable.bDate +
+              //advanceTable.bDate +
               advanceTable.address 
              
             ).toLowerCase();

@@ -8,7 +8,7 @@ export class AdvanceUser {
   lName: string;
   email: string;
   active: string;
-  bDate: string;
+  //bDate: string;
   mobile: string;
   address: string;
   operationCenter: string;
@@ -24,7 +24,7 @@ export class AdvanceUser {
       this.lName = advanceTable.lName || '';
       this.email = advanceTable.email || '';
       this.active = advanceTable.active || 'no';
-      this.bDate = formatDate(new Date(), 'yyyy-MM-dd', 'en') || '';
+      //this.bDate = formatDate(new Date(), 'yyyy-MM-dd', 'en') || '';
       this.mobile = advanceTable.mobile || '';
       this.address = advanceTable.address || '';
       this.operationCenter = advanceTable.operationCenter || '';

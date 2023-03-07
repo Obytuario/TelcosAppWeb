@@ -52,8 +52,8 @@
             <div class="m-b-20">
               <mat-label class="msr-3">Activo:</mat-label>
               <mat-radio-group aria-label="Select active" formControlName="active" required>
-                <mat-radio-button value="si">Si</mat-radio-button>
-                <mat-radio-button value="no">No</mat-radio-button>
+                <mat-radio-button [value]="true">Si</mat-radio-button>
+                <mat-radio-button [value]="false">No</mat-radio-button>
                 <mat-error *ngIf="advanceTableForm.get('active').hasError('required')">
                   Select active
                 </mat-error>
@@ -89,26 +89,8 @@
             <mat-form-field class="example-full-width " appearance="outline">
               <mat-label>Centro de operaciones</mat-label>
               <mat-select formControlName="operationCenter" required>
-                <mat-option [value]="'Usa'">
-                  Usa
-                </mat-option>
-                <mat-option [value]="'Bogota'">
-                  Bogota
-                </mat-option>
-                <mat-option [value]="'Palmira'">
-                  Palmira
-                </mat-option>
-                <mat-option [value]="'Ibague'">
-                  Ibague
-                </mat-option>
-                <mat-option [value]="'Cali'">
-                  Cali
-                </mat-option>
-                <mat-option [value]="'Cartagena'">
-                  Cartagena
-                </mat-option>
-                <mat-option [value]="'other'">
-                  Other
+                <mat-option *ngFor ="let item of selectDataCentroOperaciones" [value]="item.idDto">
+                  {{item.descripcionDto}}
                 </mat-option>
               </mat-select>
               <mat-error *ngIf="advanceTableForm.get('operationCenter').hasError('required')">
@@ -121,15 +103,12 @@
           <div class=" col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
             <mat-form-field class="example-full-width " appearance="outline">
               <mat-label>Rol</mat-label>
-              <mat-select formControlName="rol" required>
-                <mat-option [value]="'Tecnico'">
-                  Tecnico
+              <mat-select formControlName="rol" required>                          
+                <mat-option *ngFor ="let item of selectDataRol" [value]="item.idDto">
+                  {{item.descripcionDto}}
                 </mat-option>
-                <mat-option [value]="'Supervisor'">
-                  Supervisor
-                </mat-option>              
               </mat-select>
-              <mat-error *ngIf="advanceTableForm.get('operationCenter').hasError('required')">
+              <mat-error *ngIf="advanceTableForm.get('rol').hasError('required')">
                 Rol es requerido
               </mat-error>
             </mat-form-field>
@@ -138,15 +117,12 @@
             <mat-form-field class="example-full-width " appearance="outline">
               <mat-label>Cargo</mat-label>
               <mat-select formControlName="charge" required>
-                <mat-option [value]="'Supervisor operaciones 2'">
-                  Supervisor operaciones 2
-                </mat-option>
-                <mat-option [value]="'Tecnico intalaciones'">
-                  Tecnico intalaciones
+                <mat-option *ngFor ="let item of selectDataCargo" [value]="item.idDto">
+                  {{item.descripcionDto}}
                 </mat-option>
                
               </mat-select>
-              <mat-error *ngIf="advanceTableForm.get('operationCenter').hasError('required')">
+              <mat-error *ngIf="advanceTableForm.get('charge').hasError('required')">
                 Cargo es requerido
               </mat-error>
             </mat-form-field>

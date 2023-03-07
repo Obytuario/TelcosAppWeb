@@ -331,7 +331,7 @@ connect(): Observable<AdvanceUser[]> {
             advanceTable.email +
             advanceTable.mobile +
             advanceTable.active +
-            advanceTable.bDate +
+            //advanceTable.bDate +
             advanceTable.address +            
             advanceTable.operationCenter+
             advanceTable.rol+

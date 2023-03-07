@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { UnsubscribeOnDestroyAdapter } from '../shared/UnsubscribeOnDestroyAdapter';
 import { RequestResult } from '../core/models/Service/requestResult';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,7 @@ export class UserModuleService extends UnsubscribeOnDestroyAdapter{
 
   private readonly API_URL = 'assets/data/advanceTable.json';
   isTblLoading = true;
+  snackBar : MatSnackBar;
   dataChange: BehaviorSubject<AdvanceUser[]> = new BehaviorSubject<
   AdvanceUser[]
   >([]);
@@ -26,17 +28,28 @@ export class UserModuleService extends UnsubscribeOnDestroyAdapter{
     return this.dataChange.value;
   }
   getDialogData() {
-    console.log("consumo"+this.dialogData);
     return this.dialogData;
   }
   /** CRUD METHODS */
   getAllAdvanceTables(): void {
     this.subs.sink = this.httpClient
-      .get<AdvanceUser[]>(this.API_URL)
+      .get<RequestResult<AdvanceUser[]>>(`${environment.apiUrl}/Api/User/GetAllUsers`)
       .subscribe(
-        (data) => {
-          this.isTblLoading = false;
-          this.dataChange.next(data);
+        (requestResult) => {
+          
+          if (requestResult.isSuccessful) {
+            this.isTblLoading = false;
+            this.dataChange.next(requestResult.result);         
+          
+          } else {
+            this.isTblLoading = false;
+            this.showNotification(
+              'snackbar-warning',
+              requestResult.messages,
+              'bottom',
+              'center'
+            );          
+          }
         },
         (error: HttpErrorResponse) => {
           this.isTblLoading = false;
@@ -94,5 +107,13 @@ export class UserModuleService extends UnsubscribeOnDestroyAdapter{
     }
     console.log(errorMessage);
     return throwError(errorMessage);
+  }
+  showNotification(colorName, text, placementFrom, placementAlign) {
+    this.snackBar.open(text, '', {
+      duration: 2000,
+      verticalPosition: placementFrom,
+      horizontalPosition: placementAlign,
+      panelClass: colorName
+    });
   }
 }

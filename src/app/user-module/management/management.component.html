@@ -94,14 +94,14 @@
                     </mat-header-cell>
                     <mat-cell *matCellDef="let row" (contextmenu)="onContextMenu($event, row)"
                       [ngClass]="'tbl-col-width-per-7'">
-                      {{row.active}}</mat-cell>
+                      {{row.active? "Si" : "No"}}</mat-cell>
                   </ng-container>
-                  <ng-container matColumnDef="bDate">
+                  <!-- <ng-container matColumnDef="bDate">
                     <mat-header-cell *matHeaderCellDef mat-sort-header>Birth Date</mat-header-cell>
                     <mat-cell *matCellDef="let row" (contextmenu)="onContextMenu($event, row)">
                       {{row.bDate | date: 'MM/dd/yyyy' }}
                     </mat-cell>
-                  </ng-container>
+                  </ng-container> -->
                   <ng-container matColumnDef="mobile">
                     <mat-header-cell *matHeaderCellDef mat-sort-header>Telefono</mat-header-cell>
                     <mat-cell *matCellDef="let row" (contextmenu)="onContextMenu($event, row)">
