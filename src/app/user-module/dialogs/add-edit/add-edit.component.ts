@@ -7,10 +7,11 @@ import {
   UntypedFormControl,
   Validators,
   UntypedFormGroup,
-  UntypedFormBuilder
+  UntypedFormBuilder,
+  FormControl
 } from '@angular/forms';
 import { AdvanceUser } from '../../user-module.model';
-import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { MatOptionSelectionChange, MAT_DATE_LOCALE } from '@angular/material/core';
 import { formatDate } from '@angular/common';
 import { SubSink } from '../../../shared/sub-sink';
 import { SubscriptionLike } from 'rxjs';
@@ -20,6 +21,11 @@ import { HttpClient } from '@angular/common/http';
 import { ResponseSelectDto } from '../../../core/models/Service/responseSelectDto';
 import { ChargeService } from '../../../core/service/charge.service';
 import { OperationCenterService } from '../../../core/service/operation-center.service';
+import { AnyMxRecord } from 'dns';
+interface Animal {
+  name: string;
+  sound: string;
+}
 
 @Component({
   selector: 'app-add-edit',
@@ -36,6 +42,8 @@ export class AddEditComponent extends UnsubscribeOnDestroyAdapter implements OnI
   cargoDatabase: ChargeService | null;
   centroOperacionDatabase: OperationCenterService | null;
   selectDataRol;selectDataCargo;selectDataCentroOperaciones : ResponseSelectDto[]=[]; 
+  selectRol: ResponseSelectDto; selectCargo: ResponseSelectDto; selectCentroOperaciones : ResponseSelectDto; 
+
   
   constructor(    
     public dialogRef: MatDialogRef<AddEditComponent>,
@@ -83,16 +91,13 @@ export class AddEditComponent extends UnsubscribeOnDestroyAdapter implements OnI
         this.advanceTable.email,
         [Validators.required, Validators.email, Validators.minLength(5)]
       ],
-      numberDocument: [this.advanceTable.numberDocument,[Validators.required]],
-      active: [this.advanceTable.active],
-      // bDate: [
-      //   formatDate(this.advanceTable.bDate, 'yyyy-MM-dd', 'en'),
-      //   [Validators.required]
-      // ],
-      rol: [this.advanceTable.rol],
-      mobile: [this.advanceTable.mobile, [Validators.required]],
-      operationCenter: [this.advanceTable.operationCenter],
-      charge: [this.advanceTable.charge]
+      numberDocument: [this.advanceTable.numberDocument,[Validators.required,Validators.minLength(10)]],
+      active: [this.advanceTable.active],          
+      idRol: [this.advanceTable.idRol, [Validators.required]],
+      idCharge: [this.advanceTable.idCharge, [Validators.required]],
+      idOperationCenter: [this.advanceTable.idOperationCenter, [Validators.required]],
+      mobile: [this.advanceTable.mobile, [Validators.required]]      
+    
     });
   }
   submit() {
@@ -101,9 +106,34 @@ export class AddEditComponent extends UnsubscribeOnDestroyAdapter implements OnI
   onNoClick(): void {
     this.dialogRef.close();
   }
+  optionRolChangeSelected(event: ResponseSelectDto) {
+    // datos rol
+    if(event)
+        this.selectRol = event;    
+}
+optionChargeChangeSelected(event: ResponseSelectDto) {
+  // datos rol
+  if(event)
+      this.selectCargo = event;
+}
+optionOperationCenterChangeSelected(event: ResponseSelectDto) {
+  // datos rol
+  if(event)
+      this.selectCentroOperaciones = event;  
+}
   public confirmAdd(): void {
+      
+
+    this.advanceTable = this.advanceTableForm.getRawValue();
+    this.advanceTable.rol = this.selectRol.descripcionDto;
+    this.advanceTable.charge = this.selectCargo.descripcionDto;
+    this.advanceTable.operationCenter = this.selectCentroOperaciones.descripcionDto;
+
+    
+
+
     this.subs.sink = this.userModuleService
-        .addUserTable(this.advanceTableForm.getRawValue())
+        .addUserTable(this.advanceTable)
         .subscribe(
           (res) => {
             
@@ -170,3 +200,4 @@ export class AddEditComponent extends UnsubscribeOnDestroyAdapter implements OnI
   }
 
 }
+

@@ -12,7 +12,9 @@ export class AdvanceUser {
   mobile: string;
   address: string;
   operationCenter: string;
+  idOperationCenter: string;
   charge:string;
+  idCharge:string;
   idRol:string;
   rol:string;
   constructor(advanceTable) {
@@ -28,7 +30,7 @@ export class AdvanceUser {
       this.mobile = advanceTable.mobile || '';
       this.address = advanceTable.address || '';
       this.operationCenter = advanceTable.operationCenter || '';
-      this.idRol = advanceTable.idRol || this.getRandomID();
+      this.idRol = advanceTable.idRol || '';
       this.rol = advanceTable.rol || '';
       this.charge = advanceTable.charge || '';
     }

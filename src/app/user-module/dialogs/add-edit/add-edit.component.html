@@ -69,7 +69,7 @@
               <mat-icon matSuffix>email</mat-icon>
               <mat-error
                 *ngIf="advanceTableForm.get('email').hasError('required') || advanceTableForm.get('email').touched">
-                Please enter a valid email address
+                Por favor ingrese un Correo valido
               </mat-error>
             </mat-form-field>
           </div>          
@@ -78,23 +78,23 @@
           <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
             <mat-form-field class="example-full-width" appearance="outline">
               <mat-label>Telefono</mat-label>
-              <input matInput formControlName="mobile" type="number">
+              <input matInput formControlName="mobile" x1>
               <mat-icon matSuffix>phone</mat-icon>
               <mat-error *ngIf="advanceTableForm.get('mobile').hasError('required')">
-                Mobile is required
+                Telefono is requerido
               </mat-error>
             </mat-form-field>
           </div>
           <div class=" col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
             <mat-form-field class="example-full-width " appearance="outline">
               <mat-label>Centro de operaciones</mat-label>
-              <mat-select formControlName="operationCenter" required>
-                <mat-option *ngFor ="let item of selectDataCentroOperaciones" [value]="item.idDto">
+              <mat-select formControlName="idOperationCenter" required>
+                <mat-option *ngFor ="let item of selectDataCentroOperaciones" [value]="item.idDto" (onSelectionChange)="optionOperationCenterChangeSelected(item)">
                   {{item.descripcionDto}}
                 </mat-option>
               </mat-select>
-              <mat-error *ngIf="advanceTableForm.get('operationCenter').hasError('required')">
-                Country Name is required
+              <mat-error *ngIf="advanceTableForm.get('idOperationCenter').hasError('required')">
+                Centro de Operacion es requerido
               </mat-error>
             </mat-form-field>
           </div>
@@ -103,12 +103,12 @@
           <div class=" col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
             <mat-form-field class="example-full-width " appearance="outline">
               <mat-label>Rol</mat-label>
-              <mat-select formControlName="rol" required>                          
-                <mat-option *ngFor ="let item of selectDataRol" [value]="item.idDto">
+              <mat-select  formControlName="idRol"  required>                          
+                <mat-option *ngFor ="let item of selectDataRol" [value]="item.idDto" (onSelectionChange)="optionRolChangeSelected(item)">
                   {{item.descripcionDto}}
                 </mat-option>
               </mat-select>
-              <mat-error *ngIf="advanceTableForm.get('rol').hasError('required')">
+              <mat-error *ngIf="advanceTableForm.get('idRol').hasError('required')">
                 Rol es requerido
               </mat-error>
             </mat-form-field>
@@ -116,13 +116,13 @@
           <div class=" col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
             <mat-form-field class="example-full-width " appearance="outline">
               <mat-label>Cargo</mat-label>
-              <mat-select formControlName="charge" required>
-                <mat-option *ngFor ="let item of selectDataCargo" [value]="item.idDto">
+              <mat-select formControlName="idCharge" required>
+                <mat-option *ngFor ="let item of selectDataCargo" [value]="item.idDto" (onSelectionChange)="optionChargeChangeSelected(item)">
                   {{item.descripcionDto}}
                 </mat-option>
                
               </mat-select>
-              <mat-error *ngIf="advanceTableForm.get('charge').hasError('required')">
+              <mat-error *ngIf="advanceTableForm.get('idCharge').hasError('required')">
                 Cargo es requerido
               </mat-error>
             </mat-form-field>

@@ -58,9 +58,8 @@ export class UserModuleService extends UnsubscribeOnDestroyAdapter{
       );
   }
   
-  addUserTable(addUser: AdvanceUser) {       
-    
-    addUser.idRol = "DB8EA50A-3199-44BF-A443-55D50FB05F89";
+  addUserTable(addUser: AdvanceUser) {    
+   
     return this.httpClient
     .post<RequestResult<AdvanceUser>>(`${environment.apiUrl}/Api/User/SaveUser`, addUser)
     .pipe(
