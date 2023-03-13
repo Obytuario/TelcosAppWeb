@@ -73,17 +73,20 @@ export class UserModuleService extends UnsubscribeOnDestroyAdapter{
     );   
 }
  
-  updateAdvanceTable(advanceTable: AdvanceUser): void {
-    this.dialogData = advanceTable;
-
-    /* this.httpClient.put(this.API_URL + advanceTable.id, advanceTable).subscribe(data => {
-      this.dialogData = advanceTable;
-    },
-    (err: HttpErrorResponse) => {
-      // error code here
-    }
-  );*/
+  updateUserTable(editUser: AdvanceUser){
+    return this.httpClient
+    .post<RequestResult<AdvanceUser>>(`${environment.apiUrl}/Api/User/UpdateUser`, editUser)
+    .pipe(
+      map((requestResult) => {        
+        this.isTblLoading = false;
+        //editUser.id = requestResult.result.id;
+        this.dialogData = editUser;
+        return requestResult;
+      }),
+      catchError(this.errorHandler)
+    ); 
   }
+
   deleteAdvanceTable(id: number): void {
     console.log(id);
 

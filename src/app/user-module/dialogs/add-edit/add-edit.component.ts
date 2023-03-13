@@ -106,32 +106,19 @@ export class AddEditComponent extends UnsubscribeOnDestroyAdapter implements OnI
   onNoClick(): void {
     this.dialogRef.close();
   }
-  optionRolChangeSelected(event: ResponseSelectDto) {
-    // datos rol
-    if(event)
-        this.selectRol = event;    
-}
-optionChargeChangeSelected(event: ResponseSelectDto) {
-  // datos rol
-  if(event)
-      this.selectCargo = event;
-}
-optionOperationCenterChangeSelected(event: ResponseSelectDto) {
-  // datos rol
-  if(event)
-      this.selectCentroOperaciones = event;  
-}
-  public confirmAdd(): void {
-      
+  public confirmAddEdit(): void {
+    if (this.action === 'edit') {
+      this.confirmEdit();
+    } else {
+      this.confirmAdd();
+    }
+  } 
 
+  public confirmAdd(): void {
     this.advanceTable = this.advanceTableForm.getRawValue();
     this.advanceTable.rol = this.selectRol.descripcionDto;
     this.advanceTable.charge = this.selectCargo.descripcionDto;
     this.advanceTable.operationCenter = this.selectCentroOperaciones.descripcionDto;
-
-    
-
-
     this.subs.sink = this.userModuleService
         .addUserTable(this.advanceTable)
         .subscribe(
@@ -164,16 +151,45 @@ optionOperationCenterChangeSelected(event: ResponseSelectDto) {
             );         
           }
         );    
-  }
-
-  showNotification(colorName, text, placementFrom, placementAlign) {
-    this.snackBar.open(text, '', {
-      duration: 2000,
-      verticalPosition: placementFrom,
-      horizontalPosition: placementAlign,
-      panelClass: colorName
-    });
-  }
+  } 
+  public confirmEdit(): void {
+    this.advanceTable = this.advanceTableForm.getRawValue();
+    this.advanceTable.rol = this.selectRol.descripcionDto;
+    this.advanceTable.charge = this.selectCargo.descripcionDto;
+    this.advanceTable.operationCenter = this.selectCentroOperaciones.descripcionDto;
+    this.subs.sink = this.userModuleService
+        .updateUserTable(this.advanceTable)
+        .subscribe(
+          (res) => {
+            
+            if (res.isSuccessful) {
+              // const token = this.authService.currentUserValue.token;
+              // if (token) {
+              //   this.router.navigate(['/dashboard/main']);
+              // }
+              this.dialogRef.close(1);
+            } else {
+              this.showNotification(
+                'snackbar-warning',
+                 res.messages,
+                'bottom',
+                'center'
+              );
+              this.dialogRef.close();
+              //this.error = 'Credenciales Invalidas';
+            }
+          },
+          (error) => {
+            this.dialogRef.close();  
+            this.showNotification(
+              'snackbar-danger',
+              'No se pudo crear el Usuario, Valide con el administrador...!!!',
+              'bottom',
+              'center'
+            );         
+          }
+        );    
+  } 
 
   public loadData() {
     this.rolDatabase = new RolService(this.httpClient);
@@ -198,6 +214,31 @@ optionOperationCenterChangeSelected(event: ResponseSelectDto) {
     }); 
     
   }
+
+  showNotification(colorName, text, placementFrom, placementAlign) {
+    this.snackBar.open(text, '', {
+      duration: 2000,
+      verticalPosition: placementFrom,
+      horizontalPosition: placementAlign,
+      panelClass: colorName
+    });
+  }
+
+optionRolChangeSelected(event: ResponseSelectDto) {
+    // datos rol
+    if(event)
+        this.selectRol = event;    
+}
+optionChargeChangeSelected(event: ResponseSelectDto) {
+  // datos rol
+  if(event)
+      this.selectCargo = event;
+}
+optionOperationCenterChangeSelected(event: ResponseSelectDto) {
+  // datos rol
+  if(event)
+      this.selectCentroOperaciones = event;  
+}
 
 }
 

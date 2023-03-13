@@ -141,9 +141,9 @@ editCall(row) {
         (x) => x.id === this.id
       );
       // Then you update that record using data from dialogData (values you enetered)
-      // this.exampleDatabase.dataChange.value[foundIndex] =
-      //   this.userModuleService.getDialogData();
+      this.exampleDatabase.dataChange.value[foundIndex] =   this.userModuleService.getDialogData();
       // And lastly refresh table
+      
       this.refreshTable();
       this.showNotification(
         'black',
