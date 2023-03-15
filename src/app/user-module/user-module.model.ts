@@ -1,7 +1,7 @@
 import { formatDate } from '@angular/common';
 import { RouteInfo } from '../layout/sidebar/sidebar.metadata';
 export class AdvanceUser {
-  id: number;
+  id: string;
   img: string;
   numberDocument: string;
   fName: string;
@@ -17,6 +17,8 @@ export class AdvanceUser {
   idCharge:string;
   idRol:string;
   rol:string;
+  idSuperior:string;
+  nameSuperior:string;
   constructor(advanceTable) {
     {
       this.id = advanceTable.id || this.getRandomID();
@@ -33,6 +35,8 @@ export class AdvanceUser {
       this.idRol = advanceTable.idRol || '';
       this.rol = advanceTable.rol || '';
       this.charge = advanceTable.charge || '';
+      this.idSuperior=advanceTable.idSuperior || '';
+      this.nameSuperior=advanceTable.nameSuperior || '';
     }
   }
   public getRandomID(): string {

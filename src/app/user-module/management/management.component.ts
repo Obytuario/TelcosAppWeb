@@ -45,7 +45,7 @@ displayedColumns = [
 exampleDatabase: UserModuleService | null;
 dataSource: ExampleDataSource | null;
 selection = new SelectionModel<AdvanceUser>(true, []);
-id: number;
+id: string;
 advanceTable: AdvanceUser | null;
 
 breadscrums = [
@@ -306,7 +306,7 @@ constructor(
 ) {
   super();
   // Reset to the first page when the user changes the filter.
-  this.filterChange.subscribe(() => (this.paginator.pageIndex = 0));
+  //this.filterChange.subscribe(() => (this.paginator.pageIndex = 0));
 }
 /** Connect function called by the table to retrieve one stream containing the data to render. */
 connect(): Observable<AdvanceUser[]> {

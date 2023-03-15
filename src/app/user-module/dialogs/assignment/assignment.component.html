@@ -31,7 +31,7 @@
             <input matInput  required>
             <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
               <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-                {{option.name}}
+                {{option.numberDocument}} {{option.fName}} {{option.lName}}
               </mat-option>
             </mat-autocomplete>
           </mat-form-field>
@@ -40,8 +40,7 @@
       <div class="row">
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
           <div class="example-button-row">
-            <button mat-raised-button color="primary" [type]="submit" [disabled]="!assignmentForm.valid"
-              >Adicionar</button>              
+            <button mat-raised-button color="primary" [disabled]="!assignmentForm.valid"(click)="confirmAdd()">Adicionar</button>              
           </div>
         </div>
       </div>
@@ -51,7 +50,7 @@
           <div class="font-weight-bold font-17">
             <h6>Usuarios Asignados</h6>
           </div>          
-            <mat-table #table matTableExporter [dataSource]="dataUserAssignment" matSort class="example-full-width"
+            <mat-table #table matTableExporter [dataSource]="dataSource" matSort class="example-full-width"
               #exporter="matTableExporter">              
               <ng-container matColumnDef="numberDocument">
                 <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'tbl-col-width-per-25'">Documento</mat-header-cell>

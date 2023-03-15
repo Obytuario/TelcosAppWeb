@@ -38,10 +38,11 @@ export class AssignmentComponent extends UnsubscribeOnDestroyAdapter implements 
   dataUserAssignment = [];
   assignmentForm: UntypedFormGroup;
   advanceTable: AdvanceUser;
+  userAssignmentCurrent: AdvanceUser;
   userAssignment = new UntypedFormControl();
-  options: User[] = [{ name: '1030525189-Ariel Bejarano' }, { name: '1030525188-Roger Fonseca' }, { name: '1017543222-Andres Bocanegra' }];
-  filteredOptions: Observable<User[]>;
-  id: number;
+  options: AdvanceUser[] = [];//[{ name: '1030525189-Ariel Bejarano' }, { name: '1030525188-Roger Fonseca' }, { name: '1017543222-Andres Bocanegra' }];
+  filteredOptions: Observable<AdvanceUser[]>;
+  id: string;
   
   displayedColumns = [
     //'select',
@@ -54,9 +55,9 @@ export class AssignmentComponent extends UnsubscribeOnDestroyAdapter implements 
   ];
   exampleDatabase: UserModuleService | null;
   dataSource: ExampleDataSource | null;
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
-  @ViewChild('filter', { static: true }) filter: ElementRef;
+  //@ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  //@ViewChild(MatSort, { static: true }) sort: MatSort;
+  //@ViewChild('filter', { static: true }) filter: ElementRef;
 
   constructor(
     public dialogRef: MatDialogRef<AssignmentComponent>,
@@ -75,33 +76,36 @@ export class AssignmentComponent extends UnsubscribeOnDestroyAdapter implements 
       this.dialogTitle =
         data.advanceTable.fName + ' ' + data.advanceTable.lName+' - '+data.advanceTable.rol;
       this.advanceTable = data.advanceTable;
-      this.dataUserAssignment = data.advanceTable.userAssignment
+      //this.dataUserAssignment = data.advanceTable.userAssignment
       console.log(this.dataUserAssignment);
     } else {
       this.dialogTitle = 'Nueva jerarquia';
       this.advanceTable = new AdvanceUser({});
     }
     this.assignmentForm = this.createContactForm();
+    this.userAssignmentCurrent = new AdvanceUser({});
   }
  
 
-  ngOnInit(): void {
-    this.filteredOptions = this.userAssignment.valueChanges.pipe(
-      startWith(''),
-      map((value) => (typeof value === 'string' ? value : value.name)),
-      map((name) => (name ? this._filter(name) : this.options.slice()))
-    );
-        
+  ngOnInit(){
+    this.loadData();       
   }
 
-  displayFn(user: User): string {
-    return user && user.name ? user.name : '';
+  displayFn(user: AdvanceUser): string {
+    if(user && user.numberDocument)
+    {    
+      return  user.numberDocument+ ' ' +user.fName+ ' ' +user.lName;      
+    }
+    else{    
+      return '';
+    }
+    //return user && user.numberDocument ? user.numberDocument+ ' ' +user.fName+ ' ' +user.lName : '';
   }
-  private _filter(name: string): User[] {
+  private _filter(name: string): AdvanceUser[] {
     const filterValue = name.toLowerCase();
 
     return this.options.filter(
-      (option) => option.name.toLowerCase().indexOf(filterValue) === 0
+      (option) => option.numberDocument.toLowerCase().indexOf(filterValue) === 0
     );
   }
 
@@ -118,32 +122,65 @@ export class AssignmentComponent extends UnsubscribeOnDestroyAdapter implements 
   }
  
   submit() {
+    const valor = this.assignmentForm;
     // emppty stuff
   }
   onNoClick(): void {
     this.dialogRef.close();
   }
-  
-  public confirmAdd(): void {
-    // this.advanceTableService.addAdvanceTable(
-    //   this.advanceTableForm.getRawValue()
-    // );
+
+  public confirmAdd(){    
+    this.userAssignmentCurrent = this.userAssignment.value;  
+    this.userAssignmentCurrent.idSuperior = this.advanceTable.id;
+    this.userModuleService.addUserAssignment(this.userAssignmentCurrent).subscribe(
+      (res) => {
+            
+        if (res.isSuccessful) {
+          this.loadData();         
+        } else {
+          this.showNotification(
+            'snackbar-warning',
+             res.messages,
+            'bottom',
+            'center'
+          );
+          this.dialogRef.close();        
+        }
+      },
+      (error) => {
+        this.dialogRef.close();  
+        this.showNotification(
+          'snackbar-danger',
+          'No se pudo Asignar el Usuario, Valide con el administrador...!!!',
+          'bottom',
+          'center'
+        );         
+      }
+    )
+    
   }
-  public loadData() {
-    this.exampleDatabase = new UserModuleService(this.httpClient);
+  public loadData() {    
+    
+    this.exampleDatabase = new UserModuleService(this.httpClient);  
+    
     this.dataSource = new ExampleDataSource(
       this.exampleDatabase,
-      this.paginator,
-      this.sort
+      //this.paginator,
+      //this.sort,
+      this.advanceTable
     );
-    this.subs.sink = fromEvent(this.filter.nativeElement, 'keyup').subscribe(
-      () => {
-        if (!this.dataSource) {
-          return;
-        }
-        this.dataSource.filter = this.filter.nativeElement.value;
+    this.userModuleService.getAllUsersRol(this.advanceTable);
+    this.userModuleService.dataRolChange.subscribe(
+      s => {
+        this.options = s;
+        this.filteredOptions = this.userAssignment.valueChanges.pipe(
+        startWith(''),
+        map((value) => (typeof value === 'string' ? value : value.name)),
+        map((name) => (name ? this._filter(name) : this.options.slice()))
+      );
       }
-    );
+    );    
+    console.log(this.dataSource);
   }
  
 
@@ -200,15 +237,12 @@ export class AssignmentComponent extends UnsubscribeOnDestroyAdapter implements 
     });
     this.subs.sink = dialogRef.afterClosed().subscribe((result) => {
       if (result === 1) {
-        const foundIndex = this.exampleDatabase.dataChange.value.findIndex(
-          (x) => x.id === this.id
-        );
-        // for delete we use splice in order to remove single object from DataService
-        this.exampleDatabase.dataChange.value.splice(foundIndex, 1);
+        this.loadData();
+        
         this.refreshTable();
         this.showNotification(
           'snackbar-danger',
-          'Delete Record Successfully...!!!',
+          'Asignacion eliminada...!!!',
           'bottom',
           'center'
         );
@@ -216,7 +250,7 @@ export class AssignmentComponent extends UnsubscribeOnDestroyAdapter implements 
     });
   }
   private refreshTable() {
-    this.paginator._changePageSize(this.paginator.pageSize);
+    //this.paginator._changePageSize(this.paginator.pageSize);
   }
   showNotification(colorName, text, placementFrom, placementAlign) {
     this.snackBar.open(text, '', {
@@ -229,38 +263,41 @@ export class AssignmentComponent extends UnsubscribeOnDestroyAdapter implements 
 
 }
 export class ExampleDataSource extends DataSource<AdvanceUser> {
-  filterChange = new BehaviorSubject('');
-  get filter(): string {
-    return this.filterChange.value;
-  }
-  set filter(filter: string) {
-    this.filterChange.next(filter);
-  }
+  //filterChange = new BehaviorSubject('');
+  // get filter(): string {
+  //   return this.filterChange.value;
+  // }
+  // set filter(filter: string) {
+  //   this.filterChange.next(filter);
+  // }
   filteredData: AdvanceUser[] = [];
   renderedData: AdvanceUser[] = [];
   constructor(
     public exampleDatabase: UserModuleService,
-    public paginator: MatPaginator,
-    public _sort: MatSort
+    //public paginator: MatPaginator,
+    //public _sort: MatSort,
+    public userCurrent: AdvanceUser
   ) {
     super();
     // Reset to the first page when the user changes the filter.
-    this.filterChange.subscribe(() => (this.paginator.pageIndex = 0));
+    //this.filterChange.subscribe(() => (this.paginator.pageIndex = 0));
   }
   /** Connect function called by the table to retrieve one stream containing the data to render. */
   connect(): Observable<AdvanceUser[]> {
     // Listen for any changes in the base data, sorting, filtering, or pagination
     const displayDataChanges = [
-      this.exampleDatabase.dataChange,
-      this._sort.sortChange,
-      this.filterChange,
-      this.paginator.page
-    ];
-    this.exampleDatabase.getAllAdvanceTables();
+      this.exampleDatabase.dataAssignmentChange
+      //this._sort.sortChange,
+      //this.filterChange,
+      //this.paginator.page
+    ];   
+    this.exampleDatabase.getAllUsersAssignment(this.userCurrent);
+    this.renderedData = this.exampleDatabase.dataAssignment;
+    
     return merge(...displayDataChanges).pipe(
       map(() => {
         // Filter data
-        this.filteredData = this.exampleDatabase.data
+        this.renderedData = this.exampleDatabase.dataAssignment
           .slice()
           .filter((advanceTable: AdvanceUser) => {
             const searchStr = (
@@ -272,54 +309,54 @@ export class ExampleDataSource extends DataSource<AdvanceUser> {
               advanceTable.address 
              
             ).toLowerCase();
-            return searchStr.indexOf(this.filter.toLowerCase()) !== -1;
+            return searchStr //.indexOf(this.filter.toLowerCase()) !== -1;
           });
         // Sort filtered data
-        const sortedData = this.sortData(this.filteredData.slice());
+        //const sortedData = this.sortData(this.filteredData.slice());
         // Grab the page's slice of the filtered sorted data.
-        const startIndex = this.paginator.pageIndex * this.paginator.pageSize;
-        this.renderedData = sortedData.splice(
-          startIndex,
-          this.paginator.pageSize
-        );
+        // const startIndex = this.paginator.pageIndex * this.paginator.pageSize;
+        // this.renderedData = sortedData.splice(
+        //   startIndex,
+        //   this.paginator.pageSize
+        // );
         return this.renderedData;
       })
     );
   }
   disconnect() {}
   /** Returns a sorted copy of the database data. */
-  sortData(data: AdvanceUser[]): AdvanceUser[] {
-    if (!this._sort.active || this._sort.direction === '') {
-      return data;
-    }
-    return data.sort((a, b) => {
-      let propertyA: number | string = '';
-      let propertyB: number | string = '';
-      switch (this._sort.active) {
-        case 'id':
-          [propertyA, propertyB] = [a.id, b.id];
-          break;
-        case 'fName':
-          [propertyA, propertyB] = [a.fName, b.fName];
-          break;
-        case 'lName':
-          [propertyA, propertyB] = [a.lName, b.lName];
-          break;
-        case 'email':
-          [propertyA, propertyB] = [a.email, b.email];
-          break;
-        case 'address':
-          [propertyA, propertyB] = [a.address, b.address];
-          break;
-        case 'mobile':
-          [propertyA, propertyB] = [a.mobile, b.mobile];
-          break;
-      }
-      const valueA = isNaN(+propertyA) ? propertyA : +propertyA;
-      const valueB = isNaN(+propertyB) ? propertyB : +propertyB;
-      return (
-        (valueA < valueB ? -1 : 1) * (this._sort.direction === 'asc' ? 1 : -1)
-      );
-    });
-  }
+  // sortData(data: AdvanceUser[]): AdvanceUser[] {
+  //   if (!this._sort.active || this._sort.direction === '') {
+  //     return data;
+  //   }
+  //   return data.sort((a, b) => {
+  //     let propertyA: number | string = '';
+  //     let propertyB: number | string = '';
+  //     switch (this._sort.active) {
+  //       case 'id':
+  //         [propertyA, propertyB] = [a.id, b.id];
+  //         break;
+  //       case 'fName':
+  //         [propertyA, propertyB] = [a.fName, b.fName];
+  //         break;
+  //       case 'lName':
+  //         [propertyA, propertyB] = [a.lName, b.lName];
+  //         break;
+  //       case 'email':
+  //         [propertyA, propertyB] = [a.email, b.email];
+  //         break;
+  //       case 'address':
+  //         [propertyA, propertyB] = [a.address, b.address];
+  //         break;
+  //       case 'mobile':
+  //         [propertyA, propertyB] = [a.mobile, b.mobile];
+  //         break;
+  //     }
+  //     const valueA = isNaN(+propertyA) ? propertyA : +propertyA;
+  //     const valueB = isNaN(+propertyB) ? propertyB : +propertyB;
+  //     return (
+  //       (valueA < valueB ? -1 : 1) * (this._sort.direction === 'asc' ? 1 : -1)
+  //     );
+  //   });
+  // }
 }
