@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  //apiUrl: 'http://localhost:8083/TelcosSoftApi'
-  apiUrl: 'https://localhost:7145'
+  apiUrl: 'https://telcosapp.telcosingenieria.com:8083/TelcosSoftApi'
+  //apiUrl: 'https://localhost:7145'
 };
