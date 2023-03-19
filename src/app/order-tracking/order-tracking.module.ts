@@ -11,6 +11,13 @@ import { OrderTrackingRoutingModule } from './order-tracking-routing.module';
 import { MaterialComponent } from './tracking/material/material.component';
 import { EquipmentComponent } from './tracking/equipment/equipment.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatTableModule } from '@angular/material/table';
+import { MatTableExporterModule } from 'mat-table-exporter';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatSortModule } from '@angular/material/sort';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 
 @NgModule({
@@ -21,13 +28,20 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
   imports: [
     CommonModule,
     NgxDatatableModule,
+    MatPaginatorModule,
+    MatTableExporterModule,
+    MatMenuModule,
+    MatTableModule,
+    MatDialogModule,
     FormsModule,
     ReactiveFormsModule,
     MatSnackBarModule,
     MatIconModule,
+    MatDatepickerModule,
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
+    MatSortModule,
     OrderTrackingRoutingModule
   ]
 })
