@@ -18,30 +18,44 @@ import { MatTableExporterModule } from 'mat-table-exporter';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSortModule } from '@angular/material/sort';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { ComponentsModule } from '../shared/components/components.module';
+import { SharedModule } from '../shared/shared.module';
+import { EditEquipmentComponent } from './tracking/equipment/Dialogs-equipment/edit-equipment/edit-equipment.component';
+import { DeleteEquipmentComponent } from './tracking/equipment/Dialogs-equipment/delete-equipment/delete-equipment.component';
+import { DetailEquipmentComponent } from './tracking/equipment/Dialogs-equipment/detail-equipment/detail-equipment.component';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatSelectModule } from '@angular/material/select';
 
 
 @NgModule({
   declarations: [
     MaterialComponent,
-    EquipmentComponent
+    EquipmentComponent,
+    EditEquipmentComponent,
+    DeleteEquipmentComponent,
+    DetailEquipmentComponent
   ],
   imports: [
     CommonModule,
     NgxDatatableModule,
     MatPaginatorModule,
     MatTableExporterModule,
+    MatAutocompleteModule,
     MatMenuModule,
     MatTableModule,
     MatDialogModule,
     FormsModule,
     ReactiveFormsModule,
     MatSnackBarModule,
-    MatIconModule,
+    MatIconModule,    
     MatDatepickerModule,
     MatFormFieldModule,
+    SharedModule,
     MatInputModule,
+    MatSelectModule,
     MatButtonModule,
     MatSortModule,
+    ComponentsModule,
     OrderTrackingRoutingModule
   ]
 })

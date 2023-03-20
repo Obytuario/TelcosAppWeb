@@ -1,0 +1,129 @@
+<div class="addContainer" style="width: 42vw;position: static;">
+    <div class="modalHeader">
+        <div class="editRowModal">
+          <div class="modalHeader clearfix">
+            <img [src]='' alt="avatar">
+            <div class="modal-about">
+              <div class="font-weight-bold p-t-5 font-17">
+                {{orderTrackingTable?.numeroOrden}} {{orderTrackingTable?.nombreTecnico}}</div>
+            </div>
+          </div>
+        </div>
+        <button mat-icon-button (click)="dialogRef.close()" aria-label="Close dialog">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+    <!-- <h4 class="modal-title" id="modal-basic-title">
+      <div class="modal-header ">
+        <img [src]='selectedRowData?.img' alt="avatar">
+        <div class="modal-about">
+          <div class="font-weight-bold p-t-10 font-17">
+            {{selectedRowData?.firstName}}
+            {{selectedRowData?.lastName}}</div>
+        </div>
+      </div>
+    </h4> -->
+    <!-- <button type="button" class="close" aria-label="Close" >
+      <span aria-hidden="true"><i class="material-icons">close</i></span>
+    </button> -->
+  </div>
+  <div class="modal-body">
+    <form class="register-form m-6" [formGroup]="dataOrderForm" >
+      <div class="input-field col s12 d-none">
+        <input formControlName="idOrden" class="form-control" type="hidden">
+      </div>
+      <div class="input-field col s12 d-none">
+        <input formControlName="idCarpeta" class="form-control" type="hidden">
+      </div>
+      <div class="row">
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>OT</mat-label>
+            <input matInput formControlName="numeroOrden" readonly>
+            <mat-icon matSuffix>face</mat-icon>           
+          </mat-form-field>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Técnico</mat-label>
+            <input matInput formControlName="nombreTecnico" readonly>
+            <mat-icon matSuffix>face</mat-icon>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Fecha</mat-label>
+            <input matInput formControlName="fechaOrdenTrabajo" readonly>
+            <mat-icon matSuffix>phone</mat-icon>
+            
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+          <div class="tableBody">
+            <div class="table-responsive">
+                <mat-table #table matTableExporter [dataSource]="dataSource" matSort class="example-full-width"
+                #exporter="matTableExporter">              
+                <ng-container matColumnDef="codigoEquipo">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'tbl-col-width-per-25'">#</mat-header-cell>
+                  <mat-cell *matCellDef="let row" [ngClass]="'tbl-col-width-per-25'">{{row.codigoEquipo}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="nombreEquipo">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>Equipo
+                  </mat-header-cell>
+                  <mat-cell *matCellDef="let row">
+                    {{row.nombreEquipo}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="serial">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'tbl-col-width-per-25'">Serial
+                  </mat-header-cell>
+                  <mat-cell *matCellDef="let row" [ngClass]="'tbl-col-width-per-25'">
+                    {{row.serialEquipo}}</mat-cell>
+                </ng-container>   
+                <ng-container matColumnDef="Actividad">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'tbl-col-width-per-25'">Actividad
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let row" [ngClass]="'tbl-col-width-per-25'">
+                      {{row.nombreActividad}}</mat-cell>
+                  </ng-container> 
+                  <ng-container matColumnDef="Movimiento">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'tbl-col-width-per-25'">Movimiento
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let row" [ngClass]="'tbl-col-width-per-25'">
+                      {{row.nombreMovimiento}}</mat-cell>
+                  </ng-container>         
+                <ng-container matColumnDef="actions">
+                  <mat-header-cell *matHeaderCellDef [ngClass]="'tbl-col-width-per-15'">Acciones</mat-header-cell>
+                  <mat-cell *matCellDef="let row; let i=index;" [ngClass]="'tbl-col-width-per-15'">  
+                    <button mat-icon-button (click)="$event.stopPropagation()" (click)="editEquipment(row)"
+                      class="tbl-action-btn">
+                      <app-feather-icons [icon]="'edit'" [class]="'tbl-fav-edit'"></app-feather-icons>
+                    </button>        
+                    <button mat-icon-button (click)="$event.stopPropagation()" (click)="deleteItem(row)" class="tbl-action-btn">
+                      <app-feather-icons [icon]="'trash'" [class]="'tbl-fav-delete'"></app-feather-icons>
+                    </button>                  
+                  </mat-cell>
+                </ng-container>
+            
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="editCall(row)" [style.cursor]="'pointer'"
+                  matRipple>
+                </mat-row>
+              </mat-table>   
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="button-demo">
+          <!-- <button mat-raised-button type="submit" color="primary">Save</button> -->
+          <button mat-raised-button color="warn" (click)="onNoClick()" tabindex="-1">Volver</button>
+        </div>
+      </div>
+    </form>
+
+  </div>

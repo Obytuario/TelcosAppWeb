@@ -127,7 +127,7 @@
                 <ng-container matColumnDef="actions">
                   <mat-header-cell class="pr-0" *matHeaderCellDef>Acciones</mat-header-cell>
                   <mat-cell *matCellDef="let row; let i=index;" class="pr-0">
-                    <button mat-icon-button (click)="$event.stopPropagation()" (click)="editCall(row)"
+                    <button mat-icon-button (click)="$event.stopPropagation()" (click)="detailEquipment(row)"
                       class="tbl-action-btn">
                       <app-feather-icons [icon]="'edit'" [class]="'tbl-fav-edit'"></app-feather-icons>
                     </button>
@@ -135,7 +135,7 @@
                       class="tbl-action-btn">
                       <app-feather-icons [icon]="'Clipboard'" [class]="'tbl-fav-delete'"></app-feather-icons>
                     </button> -->
-                    <button mat-icon-button (click)="$event.stopPropagation()" (click)="editJerarquia(row)"
+                    <button mat-icon-button (click)="$event.stopPropagation()" (click)="detailEquipment(row)"
                       class="tbl-action-btn">
                       <app-feather-icons [icon]="'Clipboard'" [class]="'tbl-fav-delete'"></app-feather-icons>
                     </button>
