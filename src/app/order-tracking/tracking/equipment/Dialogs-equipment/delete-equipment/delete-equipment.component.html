@@ -1,1 +1,53 @@
-<p>delete-equipment works!</p>
+<div class="addContainer" style="width: 32vw;position: static;">
+    <div class="modalHeader">
+        <div class="editRowModal">
+            <div class="modalHeader clearfix">
+                <div class="modal-about">
+                    <div class="font-weight-bold p-t-5 font-17">
+                        Eliminar Equipo</div>
+                </div>
+            </div>
+        </div>
+        <button mat-icon-button (click)="dialogRef.close()" aria-label="Close dialog">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+    <div mat-dialog-content>
+        <form class="register-form m-4" [formGroup]="editEquipmentForm" (ngSubmit)="submit">
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+                    <mat-form-field class="example-full-width" appearance="outline">
+                        <mat-label>Equipo Actual</mat-label>
+                        <input matInput formControlName="nombreEquipoActividad" readonly>
+                        <mat-icon matSuffix>fingerprint</mat-icon>
+                        <!-- <mat-error *ngIf="advanceTableForm.get('lName').hasError('required')">
+                    Apellido es requerido
+                  </mat-error> -->
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class=" col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+                    <mat-form-field class="example-full-width" appearance="outline">
+                        <mat-label>Observacion Eliminacion</mat-label>
+                        <input matInput formControlName="observacionModificacion">
+                        <mat-icon matSuffix>fingerprint</mat-icon>
+                        <!-- <mat-error *ngIf="advanceTableForm.get('lName').hasError('required')">
+                      Apellido es requerido
+                    </mat-error> -->
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+                    <div class="example-button-row">
+                        <button mat-raised-button color="primary" [disabled]="!editEquipmentForm.valid"
+                            (click)="confirmDelete()">Guardar</button>
+                        <button mat-raised-button color="warn" (click)="onNoClick()" tabindex="-1">Volver</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

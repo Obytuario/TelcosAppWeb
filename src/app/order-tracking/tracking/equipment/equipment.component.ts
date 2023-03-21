@@ -158,41 +158,7 @@ editCall(row) {
   //   }
   // });
 }
-editJerarquia(row) {
-  this.id = row.id;
-  let tempDirection;
-  if (localStorage.getItem('isRtl') === 'true') {
-    tempDirection = 'rtl';
-  } else {
-    tempDirection = 'ltr';
-  }
-  // const dialogRef = this.dialog.open(AssignmentComponent, {
-  //   data: {
-  //     advanceTable: row,
-  //     action: 'edit'
-  //   },
-  //   direction: tempDirection
-  // });
-  // this.subs.sink = dialogRef.afterClosed().subscribe((result) => {
-  //   if (result === 1) {
-  //     // When using an edit things are little different, firstly we find record inside DataService by id
-  //     const foundIndex = this.exampleDatabase.dataChange.value.findIndex(
-  //       (x) => x.id === this.id
-  //     );
-  //     // Then you update that record using data from dialogData (values you enetered)
-  //     // this.exampleDatabase.dataChange.value[foundIndex] =
-  //     //   this.userModuleService.getDialogData();
-  //     // And lastly refresh table
-  //     this.refreshTable();
-  //     this.showNotification(
-  //       'black',
-  //       'Edit Record Successfully...!!!',
-  //       'bottom',
-  //       'center'
-  //     );
-  //   }
-  // });
-}
+
 deleteItem(row) {
   this.id = row.id;
   let tempDirection;

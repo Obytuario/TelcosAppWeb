@@ -1,465 +1,217 @@
 <section class="content">
-    <div class="container-fluid">
-      <div class="block-header" *ngFor="let breadscrum of breadscrums">
-        <!-- breadcrumb -->
-        <app-breadcrumb [title]="breadscrum.title" [items]="breadscrum.items" [active_item]="breadscrum.active">
-        </app-breadcrumb>
-      </div>
-      <!-- Basic Examples -->
-      <!-- <div class="alert alert-info">
-        Advance table component is develop using <strong>ngx-datatable</strong> angular plugin. Main features of
-        this table is search record in table, add new record, edit record, delete record, sorting data by
-        ascending and descending, pagination, and many more. You have just replace table static json data with your
-        dynamic json data comes from your api.
-      </div> -->
-  
-      <div class="row clearfix">
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-          <div class="card">
-            <div class="body">
-              <div class="row">
-                <div class="col-sm-12">
-                  <div class="ngxTableHeader">
-                    <ul class="header-buttons-left ms-0 mb-0">
-                      <li class="dropdown">
-                        <h2>
-                          <strong>Material</strong>
-                        </h2>
+  <div class="container-fluid">
+    <div class="block-header" *ngFor="let breadscrum of breadscrums">
+      <!-- breadcrumb -->
+      <app-breadcrumb [title]="breadscrum.title" [items]="breadscrum.items" [active_item]="breadscrum.active">
+      </app-breadcrumb>
+    </div>
+ 
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card">
+          <div class="body">
+            <div class="responsive_table">
+              <div class="materialTableHeader">
+                <div class="row">
+                  <div class="col-12">
+                    <ul class="header-buttons-left ml-0">
+                      <li class="dropdown ">
+                        <h2>Materiales</h2>
                       </li>
-                      <li class="dropdown m-l-20">
+                      <li class="dropdown m-l-5">
                         <label for="search-input"><i class="material-icons search-icon">search</i></label>
-                        <input placeholder="Buscar" type="text" class="browser-default search-field"
-                          (keyup)='filterDatatable($event)' aria-label="Search box">
+                        <input placeholder="Filtrar" type="text" #filter class="browser-default search-field"
+                          aria-label="Search box">
                       </li>
-                      <li class="dropdown m-l-20">
-                        <label for="search-input"><i class="material-icons search-icon">search</i></label>
-                        <input placeholder="Fecha Desde" type="text" class="browser-default search-field"
-                          (keyup)='filterDatatable($event)' aria-label="Search box">
+                      <li class="dropdown m-l-5">
+                        <h2>Desde</h2>
                       </li>
-                      <li class="dropdown m-l-20">
-                        <label for="search-input"><i class="material-icons search-icon">search</i></label>
-                        <input placeholder="Fecha Hasta" type="text" class="browser-default search-field"
-                          (keyup)='filterDatatable($event)' aria-label="Search box">
+                      <li class="dropdown m-l-5">                       
+                        <input placeholder="Fecha Desde" type="date" (input) ='validationDataInit($event)'class="browser-default search-field"
+                          aria-label="Search box"  [(ngModel)]='filterDates.fechaInicio'>
+                          
                       </li>
-                    </ul>
-                    <!-- <ul class="header-buttons">
-                            <li>
-                              <button mat-mini-fab color="primary" (click)='addRow(addRecord)'>
-                                <mat-icon class="col-white">add</mat-icon>
-                              </button>
-                            </li>
-                          </ul> -->
-      
-                    <ul class="header-buttons">
-                      <li>
-                        <div class="export-button m-l-10" matTooltip="XLSX">
-                          <img src="assets/images/icons/xlsx.png" alt="" />
-                        </div>
+                      <li class="dropdown m-l-5">
+                        <h2>Hasta</h2>
+                      </li>
+                      <li class="dropdown m-l-5">
+                    
+                        <input placeholder="Fecha Hasta" type="date"  (input) ='validationDataEnd($event)' class="browser-default search-field"
+                          aria-label="Search box" [(ngModel)]='filterDates.fechaFin'>
                       </li>
                       <!-- <li>
-                                <div class="export-button m-l-10" matTooltip="CSV">
-                                  <img src="assets/images/icons/csv.png" alt="" (click)="exporter.exportTable('csv')" />                          
-                                </div>
-                              </li> -->
-                      <!-- <li>
-                                <div class="export-button m-l-10" matTooltip="JSON">
-                                  <img src="assets/images/icons/json.png" alt="" (click)="exporter.exportTable('json')" />
-                                </div>
-                              </li>
-                              <li>
-                                <div class="export-button m-l-10" matTooltip="TXT">
-                                  <img src="assets/images/icons/txt.png" alt="" (click)="exporter.exportTable('txt')" />
-                                </div>
-                              </li> -->
-                    </ul>
-      
-                  </div>
-                  <ngx-datatable #table class="material" [rows]="data" [columns]="columns" [sortType]="'multi'"
-                    [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50" [rowHeight]="'60'" [limit]="10"
-                    (sort)="onSort($event)">
-                    <!-- user image -->
-                    <!-- <ngx-datatable-column name="Image" sortable="false" prop="img" [width]="100">
-                            <ng-template let-row="data" let-value="value" let-i="index" ngx-datatable-cell-template>
-                              <td class="table-img padding-0">
-                                <img width="40" src="{{ value }}" />
-                              </td>
-                            </ng-template>
-                          </ngx-datatable-column> -->
-                    <ngx-datatable-column name="First Name" [width]="130">
-                      <ng-template ngx-datatable-header-template>
-                        <span>OT</span>
-                      </ng-template>
-                    </ngx-datatable-column>
-                    <ngx-datatable-column name="Last Name" [width]="130">
-                      <ng-template ngx-datatable-header-template>
-                        <span>Técnico</span>
-                      </ng-template>
-                    </ngx-datatable-column>
-                    <ngx-datatable-column name="Gender" [width]="120">
-                      <ng-template ngx-datatable-header-template>
-                        <span>Documento</span>
-                      </ng-template>
-                    </ngx-datatable-column>
-                    <ngx-datatable-column name="Phone" [width]="200">
-                      <ng-template ngx-datatable-header-template>
-                        <span>Fecha</span>
-                      </ng-template>
-                    </ngx-datatable-column>
-                    <ngx-datatable-column name="Email" [width]="200">
-                      <ng-template ngx-datatable-header-template>
-                        <span>Carpeta</span>
-                      </ng-template>
-                    </ngx-datatable-column>
-      
-                    <!-- action buttons -->
-                    <ngx-datatable-column name="Actions" sortable="false" [width]="120">
-                      <ng-template ngx-datatable-header-template>
-                        <span>Detalle</span>
-                      </ng-template>
-                      <ng-template let-value="value" let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
-                        <span>
-                          <button class="btn tblActnBtn h-auto" (click)='editRow(row, rowIndex, editRecord)'>
-                            <i class="material-icons">mode_edit</i>
+                        <div class="export-button m-l-10" matTooltip="ADD">
+                          <button mat-mini-fab color="primary" (click)="addNew()">
+                            <mat-icon class="col-white">add</mat-icon>
                           </button>
-                          <!-- <button class="btn tblActnBtn h-auto" (click)='deleteRow(row)'>
-                                  <i class="material-icons">delete</i>
-                                </button> -->
-                        </span>
-                      </ng-template>
-                    </ngx-datatable-column>
-                  </ngx-datatable>
-                  <!-- Add Record Modal Window -->
-                  <ng-template #addRecord let-modal>
-                    <div class="modal-header editRowModal">
-                      <h4 class="modal-title" id="modal-basic-title">
-                        <div class="modal-header ">
-                          <img [src]='newUserImg' alt="avatar">
-                          <div class="modal-about">
-                            <div class="font-weight-bold p-t-10 font-17">
-                              New User</div>
-                          </div>
                         </div>
-                      </h4>
-                      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
-                        <span aria-hidden="true"><i class="material-icons">close</i></span>
-                      </button>
-                    </div>
-                    <div class="modal-body">
-                      <form class="register-form" [formGroup]="register" (ngSubmit)="onAddRowSave(register)">
-                        <div class="input-field col s12 d-none">
-                          <input formControlName="id" class="form-control" type="hidden">
+                      </li> -->
+                      <li>
+                        <div class="export-button m-l-5" matTooltip="REFRESH">
+                          <button mat-mini-fab color="primary" (click)="refresh()">
+                            <mat-icon class="col-white">refresh</mat-icon>
+                          </button>
                         </div>
-                        <div class="input-field col s12 d-none">
-                          <input formControlName="img" class="form-control" type="hidden">
+                      </li>
+                      <li>
+                        <div class="export-button m-l-5" [hidden]=!selection.hasValue() matTooltip="DELETE">
+                          <button mat-mini-fab color="warn" (click)="removeSelectedRows()">
+                            <mat-icon class="col-white">delete
+                            </mat-icon>
+                          </button>
                         </div>
-                        <div class="row">
-                          <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-                            <mat-form-field class="example-full-width" appearance="outline">
-                              <mat-label>First name</mat-label>
-                              <input matInput formControlName="firstName" required>
-                              <mat-icon matSuffix>face</mat-icon>
-                              <mat-error *ngIf="register.get('firstName').hasError('required')">
-                                First name is required
-                              </mat-error>
-                            </mat-form-field>
-                          </div>
-                          <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-                            <mat-form-field class="example-full-width" appearance="outline">
-                              <mat-label>Last name</mat-label>
-                              <input matInput formControlName="lastName">
-                              <mat-icon matSuffix>face</mat-icon>
-                            </mat-form-field>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-                            <mat-form-field class="example-full-width" appearance="outline">
-                              <mat-label>Phone</mat-label>
-                              <input matInput formControlName="phone" required>
-                              <mat-icon matSuffix>phone</mat-icon>
-                              <mat-error *ngIf="register.get('phone').hasError('required')">
-                                Phone name is required
-                              </mat-error>
-                            </mat-form-field>
-                          </div>
-                          <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-                            <mat-form-field class="example-full-width" appearance="outline">
-                              <mat-label>Gender</mat-label>
-                              <mat-select formControlName="gender" required>
-                                <mat-option *ngFor="let gender of genders" [value]="gender.value">
-                                  {{gender.value}}
-                                </mat-option>
-                              </mat-select>
-                            </mat-form-field>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
-                            <mat-form-field class="example-full-width" appearance="outline">
-                              <mat-label>Email</mat-label>
-                              <input matInput formControlName="email" required>
-                              <mat-icon matSuffix>email</mat-icon>
-                              <mat-error *ngIf="register.get('email').hasError('required') || register.get('email').touched">
-                                Please enter a valid email address
-                              </mat-error>
-                            </mat-form-field>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
-                            <mat-form-field class="example-full-width" appearance="outline">
-                              <mat-label>Address</mat-label>
-                              <textarea matInput formControlName="address"></textarea>
-                            </mat-form-field>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
-                            <button class="btn-space" [disabled]="!register.valid" mat-raised-button
-                              color="primary">Submit</button>
-                            <button type="button" mat-button data-dismiss="modal">Cancel</button>
-                          </div>
-                        </div>
-                      </form>
-                    </div>
-                  </ng-template>
-                  <!-- Edit Record Modal Window -->
-                  <ng-template #editRecord let-modal>
-                    <div class="modal-header editRowModal">
-                      <h4 class="modal-title" id="modal-basic-title">
-                        <div class="modal-header ">
-                          <img [src]='selectedRowData?.img' alt="avatar">
-                          <div class="modal-about">
-                            <div class="font-weight-bold p-t-10 font-17">
-                              {{selectedRowData?.firstName}}
-                              {{selectedRowData?.lastName}}</div>
-                          </div>
-                        </div>
-                      </h4>
-                      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-                        <span aria-hidden="true"><i class="material-icons">close</i></span>
-                      </button>
-                    </div>
-                    <div class="modal-body">
-                      <form class="register-form m-6" [formGroup]="editForm" (ngSubmit)="onEditSave(editForm)">
-                        <div class="input-field col s12 d-none">
-                          <input formControlName="id" class="form-control" type="hidden">
-                        </div>
-                        <div class="row">
-                          <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-                            <mat-form-field class="example-full-width" appearance="outline">
-                              <mat-label>OT</mat-label>
-                              <input matInput formControlName="firstName" required>
-                              <mat-icon matSuffix>face</mat-icon>
-                              <mat-error *ngIf="editForm.get('firstName').hasError('required')">
-                                First name is required
-                              </mat-error>
-                            </mat-form-field>
-                          </div>
-                          <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-                            <mat-form-field class="example-full-width" appearance="outline">
-                              <mat-label>Técnico</mat-label>
-                              <input matInput formControlName="lastName">
-                              <mat-icon matSuffix>face</mat-icon>
-                            </mat-form-field>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
-                            <mat-form-field class="example-full-width" appearance="outline">
-                              <mat-label>Fecha</mat-label>
-                              <input matInput formControlName="phone" required>
-                              <mat-icon matSuffix>phone</mat-icon>
-                              <mat-error *ngIf="register.get('phone').hasError('required')">
-                                Phone name is required
-                              </mat-error>
-                            </mat-form-field>
-                          </div>
-                        </div>
-      
-                        <div class="row">
-                          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
-                            <div class="tableBody">
-                              <div class="table-responsive">
-                                <table class="table table-hover dashboard-task-infos">
-                                  <thead>
-                                    <tr>
-                                      <th>#</th>
-                                      <th>Material</th>
-                                      <th>Cantidad</th>
-                                      <th></th>
-                                    </tr>
-                                  </thead>
-                                  <tbody>
-                                    <tr>
-                                      <td>1019110</td>
-                                      <td>CONECTOR I-STOP-42 REVERSE TEST TRTC</td>
-                                      <td>4</td>
-                                      <td>
-                                        <span>
-                                          <button class="btn tblActnBtn h-auto"
-                                            (click)='editRow(row, rowIndex, editRecordMaterial)'>
-                                            <i class="material-icons">mode_edit</i>
-                                          </button>
-                                          <button class="btn tblActnBtn h-auto"
-                                            (click)='editRow(row, rowIndex, deleteRecordMaterial)'>
-                                            <i class="material-icons">delete</i>
-                                          </button>
-                                        </span>
-                                      </td>
-                                    </tr>
-                                    <tr>
-                                      <td>1020395</td>
-                                      <td>CORREA PARA AJUSTAR CABLE COAXIAL BLANCA</td>
-                                      <td>7</td>
-                                      <td>
-                                        <span>
-                                          <button class="btn tblActnBtn h-auto"
-                                            (click)='editRow(row, rowIndex, editRecordMaterial)'>
-                                            <i class="material-icons">mode_edit</i>
-                                          </button>
-                                          <button class="btn tblActnBtn h-auto"
-                                            (click)='editRow(row, rowIndex, deleteRecordMaterial)'>
-                                            <i class="material-icons">delete</i>
-                                          </button>
-                                        </span>
-                                      </td>
-                                    </tr>
-                                  </tbody>
-                                </table>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="modal-footer">
-                          <div class="button-demo">
-                            <!-- <button mat-raised-button type="submit" color="primary">Save</button> -->
-                            <button mat-button type="button" (click)="modal.close()">Volver</button>
-                          </div>
-                        </div>
-                      </form>
-      
-                    </div>
-                  </ng-template>
-                  <!-- Edit Record Material Modal Window -->
-                  <ng-template #editRecordMaterial let-modal>
-                    <div class="modal-header editRowModal">
-                      <h4 class="modal-title" id="modal-basic-title">
-                        <div class="modal-header ">
-                          <img [src]='selectedRowData?.img' alt="avatar">
-                          <div class="modal-about">
-                            <div class="font-weight-bold p-t-10 font-17">
-                              Modificacion Material</div>
-                          </div>
-                        </div>
-                      </h4>
-                      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-                        <span aria-hidden="true"><i class="material-icons">close</i></span>
-                      </button>
-                    </div>
-                    <div class="modal-body">
-                      <form class="register-form m-4" [formGroup]="editFormMat" (ngSubmit)="onEditSave(editForm)">
-                        <div class="input-field col s12 d-none">
-                          <input formControlName="id" class="form-control" type="hidden">
-                        </div>
-                        <div class="row">
-                          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
-                            <mat-form-field class="example-full-width" appearance="outline">
-                              <mat-label>Material</mat-label>
-                              <input matInput formControlName="material" required>
-                              <mat-icon matSuffix>v</mat-icon>
-                              <mat-error *ngIf="register.get('phone').hasError('required')">
-                                Phone name is required
-                              </mat-error>
-                            </mat-form-field>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
-                            <mat-form-field class="example-full-width" appearance="outline">
-                              <mat-label>Cantidad</mat-label>
-                              <input matInput formControlName="phone" required>
-                              <mat-icon matSuffix>cantidad</mat-icon>
-                              <mat-error *ngIf="register.get('phone').hasError('required')">
-                                Phone name is required
-                              </mat-error>
-                            </mat-form-field>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
-                            <mat-form-field class="example-full-width" appearance="outline">
-                              <mat-label>Observacion Modificacion</mat-label>
-                              <input matInput formControlName="firstName" required>
-                              <!-- <mat-icon matSuffix>face</mat-icon> -->
-                              <mat-error *ngIf="editForm.get('firstName').hasError('required')">
-                                Observacion es requerido.
-                              </mat-error>
-                            </mat-form-field>
-                          </div>
-                        </div>
-      
-                        <div class="modal-footer">
-                          <div class="button-demo">
-                            <!-- <button mat-raised-button type="submit" color="primary">Save</button> -->
-                            <button mat-button type="button" (click)="modal.close()">Modificar</button>
-                          </div>
-                        </div>
-                      </form>
-      
-                    </div>
-                  </ng-template>
-                  <!-- Delete Record material Modal Window -->
-                  <ng-template #deleteRecordMaterial let-modal>
-                    <div class="modal-header editRowModal">
-                      <h4 class="modal-title" id="modal-basic-title">
-                        <div class="modal-header ">
-                          <img [src]='selectedRowData?.img' alt="avatar">
-                          <div class="modal-about">
-                            <div class="font-weight-bold p-t-10 font-17">
-                              Eliminacion Material</div>
-                          </div>
-                        </div>
-                      </h4>
-                      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-                        <span aria-hidden="true"><i class="material-icons">close</i></span>
-                      </button>
-                    </div>
-                    <div class="modal-body">
-                      <form class="register-form m-4" [formGroup]="editFormEquipo" (ngSubmit)="onEditSave(editForm)">
-                        <div class="input-field col s12 d-none">
-                          <input formControlName="id" class="form-control" type="hidden">
-                        </div>
-      
-                        <div class="row">
-                          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
-                            <mat-form-field class="example-full-width" appearance="outline">
-                              <mat-label>Observacion Eliminacion</mat-label>
-                              <input matInput formControlName="firstName" required>
-                              <!-- <mat-icon matSuffix>face</mat-icon> -->
-                              <mat-error *ngIf="editForm.get('firstName').hasError('required')">
-                                Observacion es requerido.
-                              </mat-error>
-                            </mat-form-field>
-                          </div>
-                        </div>
-      
-                        <div class="modal-footer">
-                          <div class="button-demo">
-                            <!-- <button mat-raised-button type="submit" color="primary">Save</button> -->
-                            <button mat-button type="button" (click)="modal.close()">Eliminar</button>
-                          </div>
-                        </div>
-                      </form>
-      
-                    </div>
-                  </ng-template>
+                      </li>
+                    </ul>
+                  </div>                 
                 </div>
               </div>
+              <mat-table #table matTableExporter [dataSource]="dataSource" matSort class="mat-cell"
+                #exporter="matTableExporter">
+                <!-- Checkbox Column -->
+                <ng-container matColumnDef="select">
+                  <mat-header-cell *matHeaderCellDef [ngClass]="'tbl-col-width-per-6'">
+                    <mat-checkbox (change)="$event ? masterToggle() : null"
+                      [checked]="selection.hasValue() && isAllSelected()"
+                      [indeterminate]="selection.hasValue() && !isAllSelected()" [ngClass]="'tbl-checkbox'">
+                    </mat-checkbox>
+                  </mat-header-cell>
+                  <mat-cell *matCellDef="let row" [ngClass]="'tbl-col-width-per-6'">
+                    <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
+                      [checked]="selection.isSelected(row)" [ngClass]="'tbl-checkbox'">
+                    </mat-checkbox>
+                  </mat-cell>
+                </ng-container>
+                <!-- ID Column -->
+                <ng-container matColumnDef="numeroOrden">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'tbl-col-width-per-12'">OT</mat-header-cell>
+                  <mat-cell *matCellDef="let row" [ngClass]="'tbl-col-width-per-12'">{{row.numeroOrden}}</mat-cell>
+                </ng-container>                
+                <ng-container matColumnDef="nombreTecnico">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header >Técnico
+                  </mat-header-cell>
+                <mat-cell *matCellDef="let row" (contextmenu)="onContextMenu($event, row)">
+                    {{row.nombreTecnico}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="numeroDocumento">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'tbl-col-width-per-12'">Documento
+                  </mat-header-cell>
+                  <mat-cell *matCellDef="let row" (contextmenu)="onContextMenu($event, row)"
+                  [ngClass]="'tbl-col-width-per-12'">
+                    {{row.numeroDocumento}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="estadoOrden">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'tbl-col-width-per-12'">Estado</mat-header-cell>
+                  <mat-cell *matCellDef="let row" (contextmenu)="onContextMenu($event, row)" [ngClass]="'tbl-col-width-per-12'">
+                    {{row.estadoOrden}}</mat-cell>
+                </ng-container>
+                <!-- <ng-container matColumnDef="fechaOrdenTrabajo">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'tbl-col-width-per-7'">Activo
+                  </mat-header-cell>
+                  <mat-cell *matCellDef="let row" (contextmenu)="onContextMenu($event, row)"
+                    [ngClass]="'tbl-col-width-per-7'">
+                    {{row.active? "Si" : "No"}}</mat-cell>
+                </ng-container> -->
+                <ng-container matColumnDef="fechaOrdenTrabajo">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'tbl-col-width-per-12'">Fecha Orden</mat-header-cell>
+                  <mat-cell *matCellDef="let row" (contextmenu)="onContextMenu($event, row)" [ngClass]="'tbl-col-width-per-12'">
+                    {{row.fechaOrdenTrabajo | date: 'MM/dd/yyyy' }}
+                  </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="nombreCarpeta">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'tbl-col-width-per-12'">Carpeta</mat-header-cell>
+                  <mat-cell *matCellDef="let row" (contextmenu)="onContextMenu($event, row)" [ngClass]="'tbl-col-width-per-12'">
+                    {{row.nombreCarpeta}}</mat-cell>
+                </ng-container>
+                
+                <!-- actions -->
+                <ng-container matColumnDef="actions">
+                  <mat-header-cell class="pr-0" *matHeaderCellDef>Acciones</mat-header-cell>
+                  <mat-cell *matCellDef="let row; let i=index;" class="pr-0">
+                    <button mat-icon-button (click)="$event.stopPropagation()" (click)="detailMaterial(row)"
+                      class="tbl-action-btn">
+                      <app-feather-icons [icon]="'edit'" [class]="'tbl-fav-edit'"></app-feather-icons>
+                    </button>
+                    <!-- <button mat-icon-button (click)="$event.stopPropagation()" (click)="deleteItem(row)"
+                      class="tbl-action-btn">
+                      <app-feather-icons [icon]="'Clipboard'" [class]="'tbl-fav-delete'"></app-feather-icons>
+                    </button> -->
+                    <!-- <button mat-icon-button (click)="$event.stopPropagation()" (click)="detailEquipment(row)"
+                      class="tbl-action-btn">
+                      <app-feather-icons [icon]="'Clipboard'" [class]="'tbl-fav-delete'"></app-feather-icons>
+                    </button> -->
+                  </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="editCall(row)"
+                  [style.cursor]="'pointer'" matRipple>
+                </mat-row>
+              </mat-table>
+              <!-- Loading spinner -->
+              <div *ngIf="exampleDatabase.isTblLoading" class="tbl-spinner">
+                <mat-progress-spinner color="primary" [diameter]="40" mode="indeterminate">
+                </mat-progress-spinner>
+              </div>
+              <!-- context menu start -->
+              <div style="visibility: hidden; position: fixed" [style.left]="contextMenuPosition.x"
+                [style.top]="contextMenuPosition.y" [matMenuTriggerFor]="contextMenu">
+              </div>
+              <mat-menu #contextMenu="matMenu">
+                <ng-template matMenuContent let-item="item">
+                  <button mat-menu-item (click)="addNew()">
+                    <mat-icon>add_box</mat-icon>
+                    <span>Add Record</span>
+                  </button>
+                  <button mat-menu-item (click)="editCall(item)">
+                    <mat-icon>create</mat-icon>
+                    <span>Edit Record</span>
+                  </button>
+                  <button mat-menu-item (click)="deleteItem(item)">
+                    <mat-icon>delete</mat-icon>
+                    <span>Delete Record</span>
+                  </button>
+                  <button mat-menu-item (click)="refresh()">
+                    <mat-icon>refresh</mat-icon>
+                    <span>Refresh Record</span>
+                  </button>
+                  <button mat-menu-item disabled>
+                    <mat-icon>no_encryption</mat-icon>
+                    <span>Disable</span>
+                  </button>
+                  <button mat-menu-item [matMenuTriggerFor]="nestedmenu">
+                    <mat-icon>list_alt</mat-icon>
+                    <span> Nested Menu</span>
+                  </button>
+                </ng-template>
+              </mat-menu>
+              <mat-menu #nestedmenu="matMenu">
+                <button mat-menu-item>
+                  <mat-icon>mail_outline</mat-icon>
+                  <span>Item 1</span>
+                </button>
+                <button mat-menu-item>
+                  <mat-icon>call</mat-icon>
+                  <span>Item 2</span>
+                </button>
+                <button mat-menu-item>
+                  <mat-icon>chat</mat-icon>
+                  <span>Item 3</span>
+                </button>
+              </mat-menu>
+              <!-- context menu end -->
+
+              <div *ngIf="!exampleDatabase.isTblLoading" class="no-results"
+                [style.display]="dataSource.renderedData.length == 0 ? '' : 'none'">
+                No results
+              </div>
+              <mat-paginator #paginator [length]="dataSource.filteredData.length" [pageIndex]="0" [pageSize]="10"
+                [pageSizeOptions]="[5, 10, 25, 100]">
+              </mat-paginator>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </section>
-  
+  </div>
+</section>
+

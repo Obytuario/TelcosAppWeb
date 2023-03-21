@@ -136,7 +136,13 @@ export class AssignmentComponent extends UnsubscribeOnDestroyAdapter implements 
       (res) => {
             
         if (res.isSuccessful) {
-          this.loadData();         
+          this.loadData();
+          this.showNotification(
+            'snackbar-success',
+            'Usuario asignado...!!!',
+            'bottom',
+            'center'
+          );         
         } else {
           this.showNotification(
             'snackbar-warning',

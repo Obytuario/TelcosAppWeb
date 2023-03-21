@@ -25,6 +25,9 @@ import { DeleteEquipmentComponent } from './tracking/equipment/Dialogs-equipment
 import { DetailEquipmentComponent } from './tracking/equipment/Dialogs-equipment/detail-equipment/detail-equipment.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatSelectModule } from '@angular/material/select';
+import { DetailMaterialComponent } from './tracking/material/Dialogs-materials/detail-material/detail-material.component';
+import { DeleteMaterialComponent } from './tracking/material/Dialogs-materials/delete-material/delete-material.component';
+import { EditMaterialComponent } from './tracking/material/Dialogs-materials/edit-material/edit-material.component';
 
 
 @NgModule({
@@ -33,7 +36,10 @@ import { MatSelectModule } from '@angular/material/select';
     EquipmentComponent,
     EditEquipmentComponent,
     DeleteEquipmentComponent,
-    DetailEquipmentComponent
+    DetailEquipmentComponent,
+    DetailMaterialComponent,
+    DeleteMaterialComponent,
+    EditMaterialComponent
   ],
   imports: [
     CommonModule,

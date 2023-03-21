@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, catchError, map, throwError } from 'rxjs';
 import { RequestResult } from '../core/models/Service/requestResult';
 import { UnsubscribeOnDestroyAdapter } from '../shared/UnsubscribeOnDestroyAdapter';
-import { OrderTracking, FilterDates, DetailWorkOrderFollowequipment, paramGenericDto } from './order-tracking.model';
+import { OrderTracking, FilterDates, DetailWorkOrderFollowequipment, paramGenericDto, DetailWorkOrderFollowMaterial } from './order-tracking.model';
 import { environment } from 'src/environments/environment';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ResponseSelectDto } from '../core/models/Service/responseSelectDto';
@@ -18,6 +18,9 @@ export class OrderTrackingService extends UnsubscribeOnDestroyAdapter {
   dataChangeEquipment: BehaviorSubject<DetailWorkOrderFollowequipment[]> = new BehaviorSubject<
   DetailWorkOrderFollowequipment[]
   >([]);
+  dataChangeMaterial: BehaviorSubject<DetailWorkOrderFollowMaterial[]> = new BehaviorSubject<
+  DetailWorkOrderFollowMaterial[]
+  >([]);
   dataParamGenericChange: BehaviorSubject<paramGenericDto[]> = new BehaviorSubject<
   paramGenericDto[]
   >([]);
@@ -29,6 +32,7 @@ export class OrderTrackingService extends UnsubscribeOnDestroyAdapter {
   isTblLoading = true;
   // Temporarily stores data from dialogs
   dialogDataDetailEquipment: any; 
+  dialogDataDetailmaterial: any; 
   //assignmentData:any;
 
   constructor(private httpClient: HttpClient) {
@@ -41,6 +45,9 @@ export class OrderTrackingService extends UnsubscribeOnDestroyAdapter {
   get dataDetailEquipment(): DetailWorkOrderFollowequipment[] {
     return this.dataChangeEquipment.value;
   }
+  get dataDetailMaterial(): DetailWorkOrderFollowMaterial[] {
+    return this.dataChangeMaterial.value;
+  }
   get dataSelectMovimiento(): ResponseSelectDto[] {
     return this.dataGenericChange.value;
   }
@@ -48,6 +55,10 @@ export class OrderTrackingService extends UnsubscribeOnDestroyAdapter {
   getDialogDataDetailEquipment() {
     return this.dialogDataDetailEquipment;
   }
+  getDialogDataDetailMaterial() {
+    return this.dialogDataDetailmaterial;
+  }
+  
 
    getAllOrderTables(fechas : FilterDates): void {
     this.subs.sink = this.httpClient
@@ -86,6 +97,34 @@ export class OrderTrackingService extends UnsubscribeOnDestroyAdapter {
           if (requestResult.isSuccessful) {
             this.isTblLoading = false;
             this.dataChangeEquipment.next(requestResult.result);         
+          
+          } else {
+            this.isTblLoading = false;
+            this.showNotification(
+              'snackbar-warning',
+              requestResult.messages,
+              'bottom',
+              'center'
+            );          
+          }
+        },
+        (error: HttpErrorResponse) => {
+          this.isTblLoading = false;
+          console.log(error.name + ' ' + error.message);
+        }
+      );
+  }
+  getDetailOrderMaterialTables(currentOrder : OrderTracking): void {
+    const order = currentOrder.idOrden;
+    const params = new HttpParams({ fromObject: { order } }); 
+    this.subs.sink = this.httpClient
+      .get<RequestResult<DetailWorkOrderFollowMaterial[]>>(`${environment.apiUrl}/Api/WorkOrderFollowUp/GetDetailMaterialByOrder`,{ params })
+      .subscribe(
+        (requestResult) => {
+          
+          if (requestResult.isSuccessful) {
+            this.isTblLoading = false;
+            this.dataChangeMaterial.next(requestResult.result);         
           
           } else {
             this.isTblLoading = false;
@@ -195,6 +234,48 @@ export class OrderTrackingService extends UnsubscribeOnDestroyAdapter {
         this.isTblLoading = false;
         detail.idDetalle = requestResult.result.idDetalle;
         this.dialogDataDetailEquipment = detail;
+        return requestResult;
+      }),
+      catchError(this.errorHandler)
+    );   
+  }
+  EditActyvitiMaterial(detail: DetailWorkOrderFollowMaterial) {    
+   
+    return this.httpClient
+    .post<RequestResult<DetailWorkOrderFollowMaterial>>(`${environment.apiUrl}/Api/WorkOrderFollowUp/UpdateDetailMaterialFollow`, detail)
+    .pipe(
+      map((requestResult) => {        
+        this.isTblLoading = false;
+        detail.idDetalle = requestResult.result.idDetalle;
+        this.dialogDataDetailmaterial = detail;
+        return requestResult;
+      }),
+      catchError(this.errorHandler)
+    );   
+  }
+  DeleteActyvitiEquipment(detail: DetailWorkOrderFollowequipment) {    
+   
+    return this.httpClient
+    .post<RequestResult<DetailWorkOrderFollowequipment>>(`${environment.apiUrl}/Api/WorkOrderFollowUp/DeleteDetailEquipmentFollow`, detail)
+    .pipe(
+      map((requestResult) => {        
+        this.isTblLoading = false;
+        detail.idDetalle = requestResult.result.idDetalle;
+        this.dialogDataDetailEquipment = detail;
+        return requestResult;
+      }),
+      catchError(this.errorHandler)
+    );   
+  }
+  DeleteActyvitiMaterial(detail: DetailWorkOrderFollowMaterial) {    
+   
+    return this.httpClient
+    .post<RequestResult<DetailWorkOrderFollowMaterial>>(`${environment.apiUrl}/Api/WorkOrderFollowUp/DeleteDetailMaterialFollow`, detail)
+    .pipe(
+      map((requestResult) => {        
+        this.isTblLoading = false;
+        detail.idDetalle = requestResult.result.idDetalle;
+        this.dialogDataDetailmaterial = detail;
         return requestResult;
       }),
       catchError(this.errorHandler)

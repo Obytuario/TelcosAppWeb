@@ -12,6 +12,7 @@ import { formatDate } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { EditEquipmentComponent } from '../edit-equipment/edit-equipment.component';
+import { DeleteEquipmentComponent } from '../delete-equipment/delete-equipment.component';
 
 @Component({
   selector: 'app-detail-equipment',
@@ -105,20 +106,38 @@ export class DetailEquipmentComponent extends UnsubscribeOnDestroyAdapter implem
       direction: tempDirection
     });
     this.subs.sink = dialogRef.afterClosed().subscribe((result) => {
-      if (result === 1) {
-        this.loadData();
-        // When using an edit things are little different, firstly we find record inside DataService by id
-        // const foundIndex = this.exampleDatabase.dataChange.value.findIndex(
-        //   (x) => x.id === this.id
-        // );
-        // Then you update that record using data from dialogData (values you enetered)
-        // this.exampleDatabase.dataChange.value[foundIndex] =
-        //   this.userModuleService.getDialogData();
-        // And lastly refresh table
+      if (result === 1) {         
         this.refreshTable();
         this.showNotification(
           'black',
           'Equipo Actualizado...!!!',
+          'bottom',
+          'center'
+        );
+      }
+      
+    });
+  }
+  deleteEquipment(row) {
+    let tempDirection;
+    if (localStorage.getItem('isRtl') === 'true') {
+      tempDirection = 'rtl';
+    } else {
+      tempDirection = 'ltr';
+    }
+    const dialogRef = this.dialog.open(DeleteEquipmentComponent, {
+      data: {
+        detailEquipment: row,
+        action: 'edit'
+      },
+      direction: tempDirection
+    });
+    this.subs.sink = dialogRef.afterClosed().subscribe((result) => {
+      if (result === 1) {         
+        this.refreshTable();
+        this.showNotification(
+          'black',
+          'Equipo Eliminado...!!!',
           'bottom',
           'center'
         );

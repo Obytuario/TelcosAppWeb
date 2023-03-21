@@ -78,6 +78,36 @@ export class DetailWorkOrderFollowequipment {
     return guid;
   }
 }
+export class DetailWorkOrderFollowMaterial {
+  idDetalle: string;
+  idParamActividad:string
+  codigoMaterial: string;
+  nombreMaterial: string;
+  cantidadMaterial: string;
+  idMovimiento: string;
+  idCarpeta: string;
+  nombreMovimiento: string;
+  nombreActividad: string;
+  constructor(parameters) {
+    this.idDetalle = parameters.idDetalle || this.getRandomID();
+    this.codigoMaterial = parameters.codigoMaterial || '';
+    this.nombreMaterial = parameters.nombreMaterial || ''; 
+    this.cantidadMaterial = parameters.cantidadMaterial || '';  
+    this.idParamActividad = parameters.idParamActividad || ''; 
+    this.idCarpeta = parameters.idCarpeta || '';      
+    this.nombreActividad = parameters.nombreActividad || '';     
+  }
+
+  public getRandomID(): string {
+    let d = new Date().getTime();
+    const guid = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
+        const r = (d + Math.random() * 16) % 16 | 0;
+        d = Math.floor(d / 16);
+        return (c === "x" ? r : (r & 0x3 | 0x8)).toString(16);
+    });
+    return guid;
+  }
+}
 export class paramGenericDto {
   idParamGenericActividad: string;
   nombreGeneric: string;
